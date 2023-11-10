@@ -1,0 +1,28 @@
+#Functions
+#Get ATA current IP
+CommandSSH () {
+	sshpass -p "$SSH_PASSWORD" ssh -p $SSH_PORT -o StrictHostKeyChecking=no "$SSH_USER"@"$SSH_HOST" "$SSH_COMMAND"
+}
+
+#Filter for IP Address
+GrepIP () {
+	grep -E -o '([0-9]{1,3}\.){3}[0-9]{1,3}'
+}
+
+
+#Grandstream reboot
+GreandstreamTelnetReboot () {
+	(
+	  sleep 2
+	  echo "$TELNET_PASSWORD"
+	  sleep 2
+	  echo "$REBOOT_COMMAND"
+	  sleep 1
+	  echo "exit"
+	) | telnet "$TELNET_HOST" "$TELNET_PORT"
+}
+
+#Linksys reboot
+Linksys () {
+	curl "http://$CURRENTATAIP/admin/reboot"
+}
