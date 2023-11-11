@@ -79,7 +79,7 @@ def khomp():
 
     # Find the password field
     password = firefox.find_element("name", "pass")
-    password.send_keys("admin")
+    password.send_keys("HTTP_PASSWORD")
     password.send_keys(Keys.ENTER)
 
     time.sleep(3)

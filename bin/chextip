@@ -149,10 +149,10 @@ fi
 TMP=$(echo "$DIRTMP/grandstream") 2>/dev/null
 
 GREP="$(grep -o refused $TMP 2>/dev/null)"
-[ "$GREP" = refused ] && echo "$TIME $TELNET_HOST Connextion refused!" >> $DIRLOG/$DATE && rm -rf $DIRTMP/* && exit 1
+[ "$GREP" = refused ] && echo "$TIME $TELNET_HOST Connextion refused!" >> "$DIRLOG/$DATE" && rm -rf $DIRTMP/* && exit 1
 
 GREP="$(grep -o denied $TMP 2>/dev/null)"
-[ "$GREP" = denied ] && echo "$TIME $TELNET_HOST Permission denied!" >> $DIRLOG/$DATE && rm -rf $DIRTMP/* && exit 1
+[ "$GREP" = denied ] && echo "$TIME $TELNET_HOST Permission denied!" >> "$DIRLOG/$DATE" && rm -rf $DIRTMP/* && exit 1
 
 #Changing ATA IP Address
 CommandSSH

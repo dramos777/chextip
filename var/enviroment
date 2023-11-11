@@ -1,0 +1,37 @@
+#Static Variables
+#SSH RB
+SSH_USER="admin"
+SSH_PORT="22"
+SSH_PASSWORD="admin"
+
+#Telnet variables
+TELNET_PORT="23"
+TELNET_PASSWORD="admin"
+REBOOT_COMMAND="reboot"
+
+#Http variables
+HTTP_USER="admin"
+HTTP_PASSWORD="admin"
+
+#Python
+VENV="../selenium/.venv/bin/activate"
+SELENIUM="../selenium"
+
+#APP
+F_FUNCTION="../functions/main"
+F_ENVIROMENT="../var/enviroment"
+INVENTORY="../config/inventory.csv"
+ENV_CONF="../config/env.conf"
+DIRVAR="../var"
+DIRLOG="../log"
+DIRTMP="../tmp"
+DATE="$(date "+%d-%m-%Y")"
+TIME="$(date "%H:%M:%S")"
+
+#Dinamic Variables created by ../bin/chextip
+ATAIP=
+PHONE_EXTENSION=
+SSH_HOST=
+SSH_COMMAND=
+CURRENTATAIP=
+TELNET_HOST=
