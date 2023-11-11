@@ -125,13 +125,19 @@ SSH_COMMAND="/ip dhcp-server lease set address="$(echo $ATAIP)" [find where comm
 #Rebooting ATA
 if [ ! -z "$MODEL" ]; then
 	case "$MODEL" in
-	           linksys) Linksys;;
+	         'linksys') Linksys;;
 	'intelbras/ata200') source "$VENV" \
 				&& cat "$SELENIUM/main.py" | \
 				   sed -e "s/URL/$URL/g" \
 				       -e "s/HTTP_USER/$HTTP_USER/g" \
 				       -e "s/HTTP_PASSWORD/$HTTP_PASSWORD/g" \
 				       -e "s/PYTHON_COMMAND/intelbras_ata200/g" > "$DIRTMP/main.py" \
+			     	&& python "$DIRTMP/main.py" ;;
+	           'khomp') source "$VENV" \
+				&& cat "$SELENIUM/main.py" | \
+				   sed -e "s/URL/$URL:8085/g" \
+				       -e "s/HTTP_PASSWORD/$HTTP_PASSWORD/g" \
+				       -e "s/PYTHON_COMMAND/khomp/g" > "$DIRTMP/main.py" \
 			     	&& python "$DIRTMP/main.py" ;;
 			 *) echo "ATA Reboot - Command not found!" && exit 1 ;;
 	esac
