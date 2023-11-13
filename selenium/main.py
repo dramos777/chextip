@@ -4,6 +4,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 import time
@@ -11,7 +12,9 @@ import time
 
 ### Interbras/ATA200
 def intelbras_ata200():
-    firefox = webdriver.Firefox()
+    option = Options()
+    option.headless = True
+    firefox = webdriver.Firefox(options=option)
     firefox.get("URL")
 
     # Wait for
@@ -69,7 +72,9 @@ def intelbras_ata200():
 
 ### Khomp
 def khomp():
-    firefox = webdriver.Firefox()
+    option = Options()
+    option.headless = True
+    firefox = webdriver.Firefox(options=option)
     firefox.get("URL")
 
     # Wait for
