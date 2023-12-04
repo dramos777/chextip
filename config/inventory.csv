@@ -1,4 +1,6 @@
-#id,name,rb_ip,phone_extension,...,model
-1,CLIENT1,192.168.1.1,3029,3030,3031,3032,grandstream:ht-503
-2,CLIENT2,192.168.2.1,1023,linksys:sipuraspa
-3,CLIENT3,192.168.3.1,3048,1027,intelbras:ata200
+#id,name,ip,ramais,...
+4,CLIENT4,192.168.4.1,3029,3030,3031,3032,grandstream
+5,CLIENT5,192.168.5.1,1023,grandstream
+5,CLIENT5,192.168.5.1,3033,khomp/16-M4-L
+5,CLIENT5,192.168.5.1,3034,intelbras/ata200
+6,CLIENT6,192.168.6.1,3048,1027,grandstream

@@ -5,13 +5,22 @@ F_ENVIROMENT="../var/enviroment"
 DIRVAR="../var"
 DIRLOG="../log"
 DIRTMP="../tmp"
+MODELS="
+	MODEL:			DESCRIPTION:
 
+	grandstream		All models (telnet)
+	intelbras/ata200	Intelbras/ata200 (BOT)
+	khomp			Khomp (BOT)
+	linksys			All Cisco linksys (API)
+
+"
 OPTIONS="
 #################################
     -h --help    Show this menu
 
     enviroment   Create enviroment to be configured
                  Ex: ./chextip enviroment
+    models	 Show models to use with
 
 #################################
     Examples:
@@ -25,14 +34,14 @@ OPTIONS="
 
 
 case $1 in
-            -h) echo "$OPTIONS" && exit 0 ;;
-        --help) echo "$OPTIONS" && exit 0 ;;
+     --help|-h) echo "$OPTIONS" && exit 0 ;;
+        models) echo "$MODELS" && exit 0 ;;
     enviroment) cat "$ENV_CONF" > "$F_ENVIROMENT" && exit 0 ;;
 esac
 
 [ ! -f $F_ENVIROMENT ] && echo "Enviroment file not found! type: ./chextip --help" && exit 1
 
-source "../var/enviroment"
+source "$F_ENVIROMENT"
 
 MODEL=""
 [ ! -z "$2" ] && MODEL="$(echo $2)"
@@ -62,6 +71,7 @@ fi
 
 #Importing functions
     source "$F_FUNCTION"
+    source "$F_FUNCTION_REBOOT"
 
 ###### Ensure correct variables in $F_ENVIROMENT #####
 #Phone extension number
@@ -87,7 +97,7 @@ source $F_ENVIROMENT 2>/dev/null
 
 #Get current ATA IP 
 CURRENTATAIP="$(CommandSSH | GrepIP)"
-[ "$?" != 0 ] && echo "CommandSSH Failed. Please, check the logs." && exit 1
+ErrorSSH
 sed -i "s/CURRENTATAIP.*/CURRENTATAIP=$(echo $CURRENTATAIP)/g" $F_ENVIROMENT
 sed -i "s/URL.*/URL=\"http:\/\/$(echo $CURRENTATAIP)\"/g" $F_ENVIROMENT
 
@@ -102,7 +112,7 @@ sed -i "s/TELNET_HOST.*/TELNET_HOST=$(echo $CURRENTATAIP)/g" $F_ENVIROMENT
 #Command to discovery all active ATAs IPs
 SSH_COMMAND="/ip dhcp-server lease print"
 ATAIPS="$(CommandSSH | GrepIP)"
-[ "$?" != 0 ] && echo "CommandSSH Failed. Please, check the logs." && exit 1
+ErrorSSH
 
 #Comparing active IPs and IPs to change
 for ip in $(echo $ATAIP | tr ":" "\n");do
@@ -116,8 +126,9 @@ done
 
 #Remove connections
 SSH_COMMAND="/ip firewall connection remove [find]"
-CommandSSH
-[ "$?" != 0 ] && echo "CommandSSH Failed. Please, check the logs." && exit 1
+CommandSSH 2>&1 > /dev/null
+sleep 1
+CommandSSH 2>&1 > /dev/null
 
 #Changing variable SSH_COMMAND to change ATA IP Address
 SSH_COMMAND="/ip dhcp-server lease set address="$(echo $ATAIP)" [find where comment~\""$(echo $PHONE_EXTENSION)"\"]"
@@ -125,37 +136,31 @@ SSH_COMMAND="/ip dhcp-server lease set address="$(echo $ATAIP)" [find where comm
 #Rebooting ATA
 if [ ! -z "$MODEL" ]; then
 	case "$MODEL" in
-	         'linksys') Linksys;;
-	'intelbras/ata200') source "$VENV" \
-				&& cat "$SELENIUM/main.py" | \
-				   sed -e "s/URL/$URL/g" \
-				       -e "s/HTTP_USER/$HTTP_USER/g" \
-				       -e "s/HTTP_PASSWORD/$HTTP_PASSWORD/g" \
-				       -e "s/PYTHON_COMMAND/intelbras_ata200/g" > "$DIRTMP/main.py" \
-			     	&& python "$DIRTMP/main.py" ;;
-	           'khomp') source "$VENV" \
-				&& cat "$SELENIUM/main.py" | \
-				   sed -e "s/URL/$URL:8085/g" \
-				       -e "s/HTTP_PASSWORD/$HTTP_PASSWORD/g" \
-				       -e "s/PYTHON_COMMAND/khomp/g" > "$DIRTMP/main.py" \
-			     	&& python "$DIRTMP/main.py" ;;
+	     'grandstream') Grandstream \
+			    && CommandSSH \
+			    && ErrorSSH \
+			    && CleanTMP ;;
+
+	         'linksys') Linksys \
+			    && CommandSSH \
+			    && ErrorSSH \
+			    && CleanTMP ;;
+
+
+	'intelbras/ata200') Ata200 \
+			    && [ "$?" = 0 ] && sleep 10 \
+			    && CommandSSH \
+			    && ErrorSSH \
+			    && CleanTMP ;;
+
+	           'khomp') Khomp \
+			    && [ "$?" = 0 ] && sleep 10 \
+			    && CommandSSH \
+			    && ErrorSSH \
+			    && CleanTMP ;;
+
 			 *) echo "ATA Reboot - Command not found!" && exit 1 ;;
 	esac
 fi
 
-#Grandstream
-[ -z "$MODEL" ] && GreandstreamTelnetReboot 2>&1 >> "$DIRTMP/grandstream"
-
-TMP=$(echo "$DIRTMP/grandstream") 2>/dev/null
-
-GREP="$(grep -o refused $TMP 2>/dev/null)"
-[ "$GREP" = refused ] && echo "$TIME $TELNET_HOST Connextion refused!" >> "$DIRLOG/$DATE" && rm -rf $DIRTMP/* && exit 1
-
-GREP="$(grep -o denied $TMP 2>/dev/null)"
-[ "$GREP" = denied ] && echo "$TIME $TELNET_HOST Permission denied!" >> "$DIRLOG/$DATE" && rm -rf $DIRTMP/* && exit 1
-
-#Changing ATA IP Address
-CommandSSH
-[ "$?" != 0 ] && echo "CommandSSH Failed. Please, check the logs." && exit 1
-rm -rf $DIRTMP/*
-
+[ -z "$(ls -A $DIRTMP)" ] && rm -rf "$DIRTMP/*" && exit 0

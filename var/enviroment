@@ -1,4 +1,5 @@
 #Static Variables
+#
 #SSH RB
 SSH_USER="admin"
 SSH_PORT="22"
@@ -19,6 +20,7 @@ SELENIUM="../selenium"
 
 #APP
 F_FUNCTION="../functions/main"
+F_FUNCTION_REBOOT="../functions/reboot"
 F_ENVIROMENT="../var/enviroment"
 INVENTORY="../config/inventory.csv"
 ENV_CONF="../config/env.conf"
@@ -26,12 +28,12 @@ DIRVAR="../var"
 DIRLOG="../log"
 DIRTMP="../tmp"
 DATE="$(date "+%d-%m-%Y")"
-TIME="$(date "%H:%M:%S")"
+TIME="$(date "+%H:%M:%S")"
 
 #Dinamic Variables created by ../bin/chextip
-ATAIP=
-PHONE_EXTENSION=
-SSH_HOST=
-SSH_COMMAND=
-CURRENTATAIP=
-TELNET_HOST=
+ATAIP=192.168.5.31:192.168.5.32:192.168.5.33:192.168.5.34:192.168.5.35:192.168.5.36:192.168.5.37
+PHONE_EXTENSION=3034
+SSH_HOST=192.168.5.1
+SSH_COMMAND="/ip dhcp-server lease print where comment~\"3034\""
+CURRENTATAIP=192.168.5.31
+TELNET_HOST=192.168.5.31

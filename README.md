@@ -31,6 +31,8 @@ To use this script, follow the steps below:
 - Bash shell
 - `sshpass` and `telnet` should be installed.
 - Ensure the presence of the necessary configuration files and directories.
+- Python
+- Selenium
 
 ## Compatibility
 The script is compatible with GNU/Linux environments. It has been tested on the following ATA devices:
@@ -52,6 +54,9 @@ v1.0 08/11/2023, Emanuel Dramos:
 - Initial code
 - README.md
 - Push to github
+
+v1.1 04/12/2023, Emanuel Dramos:
+- Bug corrections
 
 ### Maintainer
 Emanuel Dramos

@@ -1,0 +1,48 @@
+# Reboot functions
+Ata200 () {
+	source "$VENV" && cat "$SELENIUM/main.py" | \
+			  sed -e "s/URL/$URL/g" \
+			      -e "s/HTTP_USER/$HTTP_USER/g" \
+			      -e "s/HTTP_PASSWORD/$HTTP_PASSWORD/g" \
+			      -e "s/PYTHON_COMMAND/intelbras_ata200/g" > "$DIRTMP/main.py" \
+		       && python "$DIRTMP/main.py"
+}
+
+Khomp () {
+	source "$VENV" && cat "$SELENIUM/main.py" | \
+			  sed -e "s/URL/$URL:8085/g" \
+			      -e "s/HTTP_PASSWORD/$HTTP_PASSWORD/g" \
+			      -e "s/PYTHON_COMMAND/khomp/g" > "$DIRTMP/main.py" \
+		       && python "$DIRTMP/main.py"
+}
+
+Grandstream () {
+	(
+	  sleep 2
+	  echo "$TELNET_PASSWORD"
+	  sleep 2
+	  echo "$REBOOT_COMMAND"
+	  sleep 1
+	  echo "exit"
+	) | telnet "$TELNET_HOST" "$TELNET_PORT" 2>&1 >> "$DIRTMP/grandstream"
+
+	TMP=$(echo "$DIRTMP/grandstream") 2>/dev/null
+	cat "$DIRTMP/grandstream"
+
+	GREP="$(grep -o refused $TMP 2>/dev/null)"
+	[ "$GREP" = refused ] \
+		&& echo "$TIME $TELNET_HOST Connextion refused!" >> "$DIRLOG/$DATE" \
+		&& rm -rf $DIRTMP/* && exit 1
+
+	GREP="$(grep -o denied $TMP 2>/dev/null)"
+	[ "$GREP" = denied ] \
+		&& echo "$TIME $TELNET_HOST Permission denied!" >> "$DIRLOG/$DATE" \
+		&& rm -rf $DIRTMP/* && exit 1
+
+	[ "$GREP" != denied ] && CommandSSH
+}
+
+Linksys () {
+	curl "http://$CURRENTATAIP/admin/reboot"
+}
+
