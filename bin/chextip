@@ -43,7 +43,7 @@ esac
 
 source "$F_ENVIROMENT"
 
-echo "----------started $DATE at $TIME----------" >> "$DIRLOG/executions/$DATE"
+echo "#---started $DATE at $TIME---#" >> "$DIRLOG/executions/$DATE"
 
 MODEL=""
 [ ! -z "$2" ] && MODEL="$(echo $2)"
@@ -135,6 +135,8 @@ CommandSSH 2>&1 > /dev/null
 #Changing variable SSH_COMMAND to change ATA IP Address
 SSH_COMMAND="/ip dhcp-server lease set address="$(echo $ATAIP)" [find where comment~\""$(echo $PHONE_EXTENSION)"\"]"
 
+echo "PhoneExtension $PHONE_EXTENSION; Model $MODEL; CurrentIP $CURRENTATAIP; NewIP $ATAIP;" >> "$DIRLOG/executions/$DATE"
+
 #Rebooting ATA
 if [ ! -z "$MODEL" ]; then
 	case "$MODEL" in
@@ -165,6 +167,6 @@ if [ ! -z "$MODEL" ]; then
 	esac
 fi
 
-echo "----------finished $DATE at $TIME----------" >> "$DIRLOG/executions/$DATE"
+echo "#---finished $DATE at $TIME---#" >> "$DIRLOG/executions/$DATE"
 
 [ -z "$(ls -A $DIRTMP)" ] && rm -rf "$DIRTMP/*" && exit 0
