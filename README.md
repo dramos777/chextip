@@ -40,6 +40,7 @@ The script is compatible with GNU/Linux environments. It has been tested on the 
 - Grandstream (models: HT-503)
 - Linksys (models: SPA 3000)
 - Intelbras (models: ATA 200)
+- Khomp (models: 16-M4-L)
 
 ## Usage
 Run the script with the appropriate arguments, as demonstrated below:
@@ -50,13 +51,18 @@ Run the script with the appropriate arguments, as demonstrated below:
 
 ## History
 
-v1.0 08/11/2023, Emanuel Dramos:
+v1.0 11/08/2023, Emanuel Dramos:
 - Initial code
 - README.md
 - Push to github
 
-v1.1 04/12/2023, Emanuel Dramos:
+v1.1 12/04/2023, Emanuel Dramos:
 - Bug corrections
+
+v1.2 12/22/2023
+- Correction how chextip changes IP addres
+- Correction how chextip remove connections
+- IP range increased
 
 ### Maintainer
 Emanuel Dramos
