@@ -1,4 +1,13 @@
 # Reboot functions
+Gkm2210t () {
+	source "$VENV" && cat "$SELENIUM/main.py" | \
+			  sed -e "s/URLUSERPASSWD/$URLUSERPASSWD/g" \
+			      -e "s/HTTP_USER/$HTTP_USER/g" \
+			      -e "s/HTTP_PASSWORD/$HTTP_PASSWORD/g" \
+			      -e "s/PYTHON_COMMAND/intelbras_gkm2210t/g" > "$DIRTMP/main.py" \
+		       && python "$DIRTMP/main.py"
+}
+
 Ata200 () {
 	source "$VENV" && cat "$SELENIUM/main.py" | \
 			  sed -e "s/URL/$URL/g" \

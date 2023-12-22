@@ -2,14 +2,19 @@
 
 ENV_CONF="../config/env.conf"
 F_ENVIROMENT="../var/enviroment"
+F_ATAIPS="../var/ataips"
+F_LEASES="../var/leases"
 DIRVAR="../var"
 DIRLOG="../log"
 DIRTMP="../tmp"
+PREFIXIP="192.168."
+NETRANGE=""
 MODELS="
 	MODEL:			DESCRIPTION:
 
 	grandstream		All models (telnet)
 	intelbras/ata200	Intelbras/ata200 (BOT)
+	intelbras/gkm2210t	Intelbras/gkm2210t (BOT)
 	khomp			Khomp (BOT)
 	linksys			All Cisco linksys (API)
 
@@ -43,7 +48,15 @@ esac
 
 source "$F_ENVIROMENT"
 
-echo "#---started $DATE at $TIME---#" >> "$DIRLOG/executions/$DATE"
+STARTDATE="$DATE"
+STARTTIME="$TIME"
+
+# Ensure IP available to change
+if grep -q 49 "$F_ATAIPS"; then
+    echo "" > "$F_ATAIPS"
+fi
+
+[ ! -d "$DIRLOG/executions/$STARTDATE" ] && mkdir -p "$DIRLOG/executions/$STARTDATE"
 
 MODEL=""
 [ ! -z "$2" ] && MODEL="$(echo $2)"
@@ -87,8 +100,17 @@ SSH_HOST="$(grep "$1" "$INVENTORY" | grep -E -o '([0-9]{1,3}\.){3}[0-9]{1,3}')"
 
 sed -i "s/SSH_HOST.*/SSH_HOST="$(echo $SSH_HOST)"/g" $F_ENVIROMENT
 
-#ATA IPS to swap for
-sed -i "s/ATAIP=.*/ATAIP=192.168."$(echo $SSH_HOST|cut -d"." -f3).31:192.168."$(echo $SSH_HOST|cut -d"." -f3).32:192.168."$(echo $SSH_HOST|cut -d"." -f3).33:192.168."$(echo $SSH_HOST|cut -d"." -f3).34:192.168."$(echo $SSH_HOST|cut -d"." -f3).35:192.168."$(echo $SSH_HOST|cut -d"." -f3).36:192.168."$(echo $SSH_HOST|cut -d"." -f3).37"/g" $F_ENVIROMENT
+#Configuring ATA IPS to swap for
+NETRANGE="$(echo $SSH_HOST|cut -d"." -f3)"
+
+for i in $(seq 10 49); do
+  TMPATAIP+="$PREFIXIP$NETRANGE.$i:"
+done
+
+ATAIP="$TMPATAIP"
+unset TMPATAIP
+
+sed -i "s/ATAIP=.*/ATAIP="$(echo $ATAIP)"/g" $F_ENVIROMENT
 
 #Command to discovery current ATA IP
 SSH_COMMAND="\"\/ip dhcp-server lease print where comment~\\\\\""$(echo $1)"\\\\\""\"
@@ -105,6 +127,7 @@ sed -i "s/URL.*/URL=\"http:\/\/$(echo $CURRENTATAIP)\"/g" $F_ENVIROMENT
 
 #Http data
 URL=http:\\\/\\\/"$CURRENTATAIP"
+URLUSERPASSWD=http:\\\/\\\/"$HTTP_USER"':'"$HTTP_PASSWORD"'@'"$CURRENTATAIP"
 
 #ATA IP for telent reboot
 TELNET_HOST="$(echo $CURRENTATAIP)"
@@ -112,13 +135,23 @@ sed -i "s/TELNET_HOST.*/TELNET_HOST=$(echo $CURRENTATAIP)/g" $F_ENVIROMENT
 
 #### Execution ####
 #Command to discovery all active ATAs IPs
-SSH_COMMAND="/ip dhcp-server lease print"
-ATAIPS="$(CommandSSH | GrepIP)"
-ErrorSSH
 
-#Comparing active IPs and IPs to change
+SSH_COMMAND="/ip dhcp-server lease print"
+CommandSSH | GrepIP > $F_LEASES
+
+#Comparing leases IPs and last IPs changed and adding new IPs
+while read -r ip; do
+    if cat "$F_ATAIPS" | grep -wq "$ip"
+    then
+        continue
+    else
+        echo "$ip" >> "$F_ATAIPS" 2>/dev/null
+    fi
+done < "$F_LEASES"
+
+#Comparing active IPs and last IPs changed
 for ip in $(echo $ATAIP | tr ":" "\n");do
-    if echo $ATAIPS | grep -wq $ip
+    if cat "$F_ATAIPS" | grep -wq "$ip"
     then
         continue
     else
@@ -127,15 +160,14 @@ for ip in $(echo $ATAIP | tr ":" "\n");do
 done
 
 #Remove connections
-SSH_COMMAND="/ip firewall connection remove [find]"
+SSH_COMMAND="\"\/ip firewall connection remove [find src-address~\\\\\""$CURRENTATAIP"\\\\\""]\"
 CommandSSH 2>&1 > /dev/null
-sleep 1
+
+SSH_COMMAND="\"\/ip firewall connection remove [find dst-address~\\\\\""$CURRENTATAIP"\\\\\""]\"
 CommandSSH 2>&1 > /dev/null
 
 #Changing variable SSH_COMMAND to change ATA IP Address
 SSH_COMMAND="/ip dhcp-server lease set address="$(echo $ATAIP)" [find where comment~\""$(echo $PHONE_EXTENSION)"\"]"
-
-echo "PhoneExtension $PHONE_EXTENSION; Model $MODEL; CurrentIP $CURRENTATAIP; NewIP $ATAIP;" >> "$DIRLOG/executions/$DATE"
 
 #Rebooting ATA
 if [ ! -z "$MODEL" ]; then
@@ -143,30 +175,33 @@ if [ ! -z "$MODEL" ]; then
 	     'grandstream') Grandstream \
 			    && CommandSSH \
 			    && ErrorSSH \
-			    && CleanTMP ;;
+			    && ClearTMP ;;
 
 	         'linksys') Linksys \
 			    && CommandSSH \
 			    && ErrorSSH \
-			    && CleanTMP ;;
+			    && ClearTMP ;;
 
 
 	'intelbras/ata200') Ata200 \
-			    && [ "$?" = 0 ] && sleep 10 \
-			    && CommandSSH \
+			    && [ "$?" = 0 ] && CommandSSH \
 			    && ErrorSSH \
-			    && CleanTMP ;;
+			    && ClearTMP ;;
+
+	'intelbras/gkm2210t') Gkm2210t \
+			    && [ "$?" = 0 ] && CommandSSH \
+			    && ErrorSSH \
+			    && ClearTMP ;;
 
 	           'khomp') Khomp \
-			    && [ "$?" = 0 ] && sleep 10 \
-			    && CommandSSH \
+			    && [ "$?" = 0 ] && CommandSSH \
 			    && ErrorSSH \
-			    && CleanTMP ;;
+			    && ClearTMP ;;
 
 			 *) echo "ATA Reboot - Command not found!" && exit 1 ;;
 	esac
 fi
 
-echo "#---finished $DATE at $TIME---#" >> "$DIRLOG/executions/$DATE"
+echo "$STARTDATE $STARTTIME-$TIME    $PHONE_EXTENSION $MODEL    $CURRENTATAIP>>$ATAIP" >> "$DIRLOG/executions/$STARTDATE/$1" 2>/dev/null
 
-[ -z "$(ls -A $DIRTMP)" ] && rm -rf "$DIRTMP/*" && exit 0
+[ ! -z "$(ls -A $DIRTMP/)" ] && rm -rf $DIRTMP/* && exit 0

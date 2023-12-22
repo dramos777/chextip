@@ -10,6 +10,32 @@ from selenium.webdriver.firefox.options import Options
 import time
 
 
+def intelbras_gkm2210t():
+    try:
+        option = Options()
+        option.add_argument('--headless')
+        firefox = webdriver.Firefox(options=option)
+        firefox.get("URLUSERPASSWD")
+
+        WebDriverWait(firefox, 10).until(
+            EC.visibility_of_element_located(("id", "linkMenu7"))
+        )
+
+        reboot_menu = firefox.find_element("id", "linkMenu7")
+        reboot_menu.click()
+
+        time.sleep(5)
+
+        reboot_button = firefox.find_element(By.XPATH, "//input[@value=' Reiniciar ' and @class='botaoGeral']")
+        reboot_button.click()
+
+    except Exception as e:
+        print(f"An exception occurred: {e}")
+
+    finally:
+        firefox.quit()
+
+
 def intelbras_ata200():
     try:
         option = Options()
@@ -30,7 +56,7 @@ def intelbras_ata200():
         login_button = firefox.find_element("id", "login_button")
         login_button.click()
 
-        time.sleep(3)
+        time.sleep(5)
 
         firefox.switch_to.frame("menuFrame")
 
@@ -45,7 +71,7 @@ def intelbras_ata200():
 
         firefox.switch_to.default_content()
 
-        time.sleep(3)
+        time.sleep(5)
 
         firefox.switch_to.frame("mainframe")
 
@@ -56,7 +82,7 @@ def intelbras_ata200():
         reboot_button = firefox.find_element("id", "strReboot")
         reboot_button.click()
 
-        time.sleep(7)
+        time.sleep(5)
 
         alert = firefox.switch_to.alert
         alert.accept()
@@ -79,19 +105,19 @@ def khomp():
         )
 
         password = firefox.find_element("name", "pass")
-        password.send_keys("admin")
+        password.send_keys("HTTP_PASSWORD")
         password.send_keys(Keys.ENTER)
 
-        time.sleep(3)
+        time.sleep(5)
 
         firefox.switch_to.default_content()
         firefox.switch_to.frame("menuFrame")
 
         restart_button = firefox.find_element(By.XPATH, '//input[@value="REINICIAR" and @style="width:100%"]')
-        time.sleep(7)
+        time.sleep(5)
         restart_button.click()
 
-        time.sleep(7)
+        time.sleep(5)
 
         alert = firefox.switch_to.alert
         alert.accept()
