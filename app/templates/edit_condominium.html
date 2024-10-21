@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Editar Condomínio</h2>
+<form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <p>{{ form.name.label }} {{ form.name() }}</p>
+    <p>{{ form.rb_host_ip.label }} {{ form.rb_host_ip() }}</p>
+    <p><button type="submit" class="btn btn-primary">Salvar</button></p>
+</form>
+{% endblock %}
+

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Cadastrar Ramal</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.branch_number.label }}
+            {{ form.branch_number(class_='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.location.label }}
+            {{ form.location(class_='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.model.label }}
+            {{ form.model(class_='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.manufacturer.label }}
+            {{ form.manufacturer(class_='form-control') }}
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="condo_id" value="{{ condo_id }}">
+            {{ form.submit(class_='btn btn-primary') }}
+        </div>
+    </form>
+</div>
+{% endblock %}
+
