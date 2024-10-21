@@ -71,8 +71,9 @@ Run the script with the necessary arguments:
 
 ```
 ./chextip <phone_extension_number> [model]
-The script retrieves the necessary data from the database, applies the IP changes, and logs the actions.
 ```
+The script retrieves the necessary data from the database, applies the IP changes, and logs the actions.
+
 ## Compatibility
 This script works in GNU/Linux environments and supports the following ATA devices:
 
