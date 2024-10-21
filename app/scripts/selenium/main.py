@@ -15,7 +15,7 @@ def intelbras_gkm2210t():
         option = Options()
         option.add_argument('--headless')
         firefox = webdriver.Firefox(options=option)
-        firefox.get("URLUSERPASSWD")
+        firefox.get("http://HTTP_USER:HTTP_PASSWORD@CURRENTATAIP")
 
         WebDriverWait(firefox, 10).until(
             EC.visibility_of_element_located(("id", "linkMenu7"))
@@ -41,7 +41,7 @@ def intelbras_ata200():
         option = Options()
         option.add_argument('--headless')
         firefox = webdriver.Firefox(options=option)
-        firefox.get("URL")
+        firefox.get("http://CURRENTATAIP")
 
         WebDriverWait(firefox, 10).until(
             EC.visibility_of_element_located(("name", "username"))
@@ -98,7 +98,7 @@ def khomp():
         option = Options()
         option.add_argument('--headless')
         firefox = webdriver.Firefox(options=option)
-        firefox.get("URL")
+        firefox.get("http://CURRENTATAIP")
 
         WebDriverWait(firefox, 10).until(
             EC.visibility_of_element_located(("name", "pass"))

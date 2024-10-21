@@ -1,58 +1,99 @@
-# Change ATA IP Script
+# Chextip 2.0
+##Description
+This project automates the process of changing the IP address of an ATA (Analog Telephone Adapter) device. The solution now includes a Bash script integrated with a Flask web interface and a MariaDB database to store and manage ATA configurations. The project no longer uses an inventory file, retrieving all necessary data directly from the database. The infrastructure is containerized using Docker Compose for easy deployment.
 
-## Description
-This Bash script is designed to automate the process of changing the IP address of an ATA (Analog Telephone Adapter) device. It reads from an inventory file informations about the infra enviroment and modifies the necessary configurations to update the ATA IP. The script utilizes various functions and environment variables to execute the necessary actions.
+## Features
+- Bash Script: Automates the ATA IP update process.
+- Flask Web Interface: Manage ATAs via a web interface.
+- MariaDB Integration: Stores device configurations and retrieves data dynamically.
+- Docker Compose: Easily deploy the entire environment, including the web app and database.
+- Supports Multiple ATA Models: Grandstream (HT-503), Linksys (SPA 3000), Intelbras (ATA 200).
 
-## Instructions
-To use this script, follow the steps below:
+## Web Interface Overview
+The Flask web interface allows users to:
 
-1. Make sure you have the necessary environment variables properly configured.
-2. Ensure that the required files and directories are in place.
-4. Run the script with appropriate arguments.
-5. Make sure RouterOS IP and phone extension is configured.
-6. Make sure client-dhcp is configured in ATA
-7. Make sure RouterOS leases is configured with ATA IP and properly comment.
-8. Make sure you have the following dependencies installed:
+- View and manage ATA configurations stored in the MariaDB database.
+- Add or update ATA records.
+- Initiate the IP change process for a specific ATA via the web interface.
+- View logs of operations and errors.
+### Running the Web Interface with Docker Compose
+Clone the Repository:
 
-- Python
-- Selenium
-- WebDriver (the script uses the Firefox browser)
-- Telnet
-- Sshpass
+```
+git clone https://github.com/dramos777/chextip.git
+cd chextip
+```
+Start the Application: Ensure Docker and Docker Compose are installed, then run:
+```
+docker-compose up -d
+```
+Access the Web Interface: Open your browser and navigate to http://localhost:5000 to interact with the web interface.
 
-## Script Overview
+## Docker Compose Setup
+The project uses Docker Compose to run both the Flask application and the MariaDB database. The docker-compose.yaml defines the services and the required environment variables.
 
-- The script sets up necessary variables and checks for the presence of required utilities like `sshpass` and `telnet`.
-- It imports functions from the main file and environment variables from the environment file.
-- The script updates the environment variables and performs the necessary tasks to change the ATA IP address.
-- It handles potential errors and logs the events in the designated log directory.
-
-## Prerequisites
-- Bash shell
-- `sshpass` and `telnet` should be installed.
-- Ensure the presence of the necessary configuration files and directories.
-
-## Compatibility
-The script is compatible with GNU/Linux environments. It has been tested on the following ATA devices:
-
-- Grandstream (models: HT-503)
-- Linksys (models: SPA 3000)
-- Intelbras (models: ATA 200)
-
-## Usage
-Run the script with the appropriate arguments, as demonstrated below:
-
-```bash
-./chextip <phone_extension_number> [model]
+## Environment Variables
+DB Variables:
+```
+MYSQL_DATABASE="condominios_db"
+MYSQL_ROOT_PASSWORD="admin"
+MYSQL_USER="admin"
+MYSQL_PASSWORD="admin"
+MYSQL_HOST="db"
+```
+SSH Variables:
+```
+SSH_USER="admin"
+SSH_PORT="22"
+SSH_PASSWORD="admin"
+```
+Telnet Variables:
+```
+TELNET_PORT="23"
+TELNET_PASSWORD="admin"
+REBOOT_COMMAND="reboot"
+```
+HTTP Variables:
+```
+HTTP_USER="admin"
+HTTP_PASSWORD="admin"
+```
+Network Prefix:
+```
+PREFIXIP="192.168."
 ```
 
+## Bash Script Overview
+The Bash script is integrated with the database to dynamically retrieve ATA configurations and update their IP addresses. It interacts with the RouterOS system to modify DHCP leases and uses SSH, Telnet, and HTTP to communicate with the ATAs.
+
+## Usage
+Run the script with the necessary arguments:
+
+```
+./chextip <phone_extension_number> [model]
+The script retrieves the necessary data from the database, applies the IP changes, and logs the actions.
+```
+## Compatibility
+This script works in GNU/Linux environments and supports the following ATA devices:
+
+Grandstream (HT-503)
+Linksys (SPA 3000)
+Intelbras (ATA 200, GKM2210T)
+Khomp
+
 ## History
+**v1.0 - 08/11/2023, Emanuel Dramos:**
 
-v1.0 08/11/2023, Emanuel Dramos:
-- Initial code
-- README.md
-- Push to github
+- Initial script release.
+- Added Selenium and automation.
 
-### Maintainer
+**v2.0 - 21/10/2024, Emanuel Dramos:**
+
+- Added Flask web interface.
+- Integrated MariaDB for data management.
+- Containerized application with Docker Compose.
+
+## Maintainer
 Emanuel Dramos
-- **Github:** https://github.com/dramos777
+
+- GitHub: dramos777

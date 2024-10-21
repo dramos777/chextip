@@ -1,16 +1,16 @@
 #Functions
 #Get ATA current IP
 CommandSSH () {
-	sshpass -p "$SSH_PASSWORD" ssh -p $SSH_PORT -o StrictHostKeyChecking=no "$SSH_USER"@"$SSH_HOST" "$SSH_COMMAND" 2> "$DIRTMP/ERROR$1"
+	sshpass -p "$SSH_PASSWORD" ssh -p $SSH_PORT -o StrictHostKeyChecking=no "$SSH_USER"@"$SSH_HOST" "$SSH_COMMAND" 2> "$DIRTMP/ERROR"
 
 }
 
 #Error test ssh
 ErrorSSH () {
 	if [ $? != 0 ]; then
-		ERROR="$(cat $DIRTMP/ERROR$1)"
+		ERROR="$(cat $DIRTMP/ERROR)"
 		echo '---' >> "$DIRLOG/$DATE"
-		echo "$TIME" "$SSH_HOST" "$ERROR" >> "$DIRLOG/$DATE"
+		echo "$TIME" "$SSH_HOST" "$ERROR" >> "$DIRLOG/$1_$DATE.log"
 		echo "CommandSSH Failed. Please, check the logs."
 		exit 1
 	fi
@@ -22,5 +22,5 @@ GrepIP () {
 }
 
 ClearTMP () {
-	rm -rf $FILETMP
+	rm -rf $DIRTMP/*
 }

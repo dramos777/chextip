@@ -1,0 +1,40 @@
+# DB VARIABLES
+#MYSQL_HOST="127.0.0.1"
+#MYSQL_USER="admin"
+#DB_PASS="admin"
+#MYSQL_DATABASE="condominios_db"
+
+#SSH RB
+#SSH_USER="admin"
+#SSH_PORT="22"
+#SSH_PASSWORD="admin"
+
+#Telnet variables
+#TELNET_PORT="23"
+#TELNET_PASSWORD="admin"
+REBOOT_COMMAND="reboot"
+
+#Http variables
+#HTTP_USER="admin"
+#HTTP_PASSWORD="admin"
+
+#Python
+SELENIUM="/app/scripts/selenium"
+
+#APP
+BRANCH_NUMBER="$1"
+NETRANGE=""
+DATE="$(date "+%d-%m-%Y")"
+TIME="$(date "+%H:%M:%S")"
+F_ATAIPS="/app/scripts/var/ataips"
+F_LEASES="/app/scripts/var/leases"
+DIRVAR="/app/scripts/var"
+#DIRLOG="/var/log"
+DIRTMP="/tmp"
+#PREFIXIP="192.168."
+F_FUNCTION="/app/scripts/functions/main"
+F_FUNCTION_REBOOT="/app/scripts/functions/reboot"
+F_ENVIROMENT="/app/scripts/var/environment"
+STARTDATE="$DATE"
+STARTTIME="$TIME"
+
