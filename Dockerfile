@@ -28,7 +28,7 @@ COPY ./app /app
 WORKDIR /app
 
 RUN apk update \
-    && apk add --no-cache firefox bash inetutils-telnet sshpass mariadb-client \
+    && apk add --no-cache firefox bash inetutils-telnet sshpass mariadb-client openssh-client \
     && pip install --no-cache-dir -r requirements.txt \
     && addgroup -S chextip && adduser -S chextip -G chextip \
     && mkdir -p /var/log/chextip \
