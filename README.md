@@ -77,10 +77,10 @@ The script retrieves the necessary data from the database, applies the IP change
 ## Compatibility
 This script works in GNU/Linux environments and supports the following ATA devices:
 
-Grandstream (HT-503)
-Linksys (SPA 3000)
-Intelbras (ATA 200, GKM2210T)
-Khomp
+- Grandstream (HT-503)
+- Linksys (SPA 3000)
+- Intelbras (ATA 200, GKM2210T)
+- Khomp
 
 ## History
 **v1.0 - 08/11/2023, Emanuel Dramos:**
