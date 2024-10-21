@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  chextip:
+    image: dramos777/chextip:2.0
+    environment:
+      MYSQL_DATABASE: "${MYSQL_DATABASE:?Please configure MYSQL_DATABASE in the .env file}"
+      MYSQL_USER: "${MYSQL_USER:?Please configure MYSQL_USER in the .env file}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD:?Please configure MYSQL_PASSWORD in the .env file}"
+      MYSQL_HOST: "${MYSQL_HOST:?Please configure MYSQL_HOST in the .env file}"
+      SSH_USER: "${SSH_USER:?Please configure SSH_USER in the .env file}"
+      SSH_PORT: "${SSH_PORT:?Please configure SSH_PORT in the .env file}"
+      SSH_PASSWORD: "${SSH_PASSWORD:?Please configure SSH_PASSWORD in the .env file}"
+      TELNET_PORT: "${TELNET_PORT:?Please configure TELNET_PORT in the .env file}"
+      TELNET_PASSWORD: "${TELNET_PASSWORD:?Please configure TELNET_PASSWORD in the .env file}"
+      HTTP_USER: "${HTTP_USER:?Please configure HTTP_USER in the .env file}"
+      HTTP_PASSWORD: "${HTTP_PASSWORD:?Please configure HTTP_PASSWORD in the .env file}"
+      PREFIXIP: "${PREFIXIP:?Please configure PREFIXIP in the .env file}"
+    ports:
+      - "5000:5000"
+
+  db:
+    image: mariadb:latest
+    environment:
+      MYSQL_DATABASE: "${MYSQL_DATABASE:?Please configure MYSQL_DATABASE in the .env file}"
+      MYSQL_USER: "${MYSQL_USER:?Please configure MYSQL_USER in the .env file}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD:?Please configure MYSQL_PASSWORD in the .env file}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:?Please configure MYSQL_ROOT_PASSWORD in the .env file}"
+#    ports:
+#      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
+
