@@ -1,5 +1,5 @@
 # Chextip 2.0
-##Description
+## Description
 This project automates the process of changing the IP address of an ATA (Analog Telephone Adapter) device. The solution now includes a Bash script integrated with a Flask web interface and a MariaDB database to store and manage ATA configurations. The project no longer uses an inventory file, retrieving all necessary data directly from the database. The infrastructure is containerized using Docker Compose for easy deployment.
 
 ## Features
