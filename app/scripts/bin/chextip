@@ -23,7 +23,7 @@ MODEL=""
 PHONE_EXTENSION="$1"
 
 #RouterOS IP
-SSH_HOST=$(mysql -h "$MYSQL_HOST" -u "$MYSQL_USER" -p"$DB_PASS" -D "$MYSQL_DATABASE" -se "SELECT c.rb_host_ip FROM condominium c JOIN branch b ON c.id = b.condominium_id WHERE b.branch_number = "$BRANCH_NUMBER";" -N)
+SSH_HOST=$(mysql -h "$MYSQL_HOST" -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -se "SELECT c.rb_host_ip FROM condominium c JOIN branch b ON c.id = b.condominium_id WHERE b.branch_number = "$BRANCH_NUMBER";" -N)
 
 #Configuring ATA IPS to swap for
 NETRANGE="$(echo $SSH_HOST|cut -d"." -f3)"

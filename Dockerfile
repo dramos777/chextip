@@ -3,7 +3,7 @@ FROM python:3.10-alpine3.19
 # DB VARIABLES
 ENV MYSQL_HOST="127.0.0.1"
 ENV MYSQL_USER="admin"
-ENV DB_PASS="admin"
+ENV MYSQL_PASSWORD="admin"
 ENV MYSQL_DATABASE="condominios_db"
 
 #SSH RB
