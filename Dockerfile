@@ -38,9 +38,10 @@ RUN apt update \
     && touch "/var/log/chextip/web_chextip_audit.log" \
     && chown -R chextip:chextip /app \
     && chown -R chextip:chextip /var/log/chextip \
+    && chown -R chextip:chextip /usr/local/bin/* \
     && chmod +x /app/entrypoint.sh
 
-USER chextip
+#USER chextip
 
 EXPOSE 5000
 
