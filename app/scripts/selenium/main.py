@@ -11,6 +11,7 @@ import time
 
 
 def intelbras_gkm2210t():
+    firefox = None
     try:
         option = Options()
         option.add_argument('--headless')
@@ -33,10 +34,11 @@ def intelbras_gkm2210t():
         print(f"An exception occurred: {e}")
 
     finally:
-        firefox.quit()
-
+        if firefox:
+            firefox.quit()
 
 def intelbras_ata200():
+    firefox = None
     try:
         option = Options()
         option.add_argument('--headless')
@@ -91,9 +93,11 @@ def intelbras_ata200():
         print(f"An exception occurred: {e}")
 
     finally:
-        firefox.quit()
+        if firefox:
+            firefox.quit()
 
 def khomp():
+    firefox = None
     try:
         option = Options()
         option.add_argument('--headless')
@@ -126,7 +130,8 @@ def khomp():
         print(f"An exception occurred: {e}")
 
     finally:
-        firefox.quit()
+        if firefox:
+            firefox.quit()
 
 # Call your functions
 PYTHON_COMMAND()
