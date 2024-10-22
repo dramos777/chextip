@@ -24,10 +24,10 @@ RUN apt update \
        wget bzip2 telnet sshpass mariadb-client openssh-client iputils-ping firefox-esr \
     && pip install --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt \
-    && wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz \
-    && tar -xvzf geckodriver-v0.33.0-linux64.tar.gz \
+    && wget https://github.com/mozilla/geckodriver/releases/download/v0.35.0/geckodriver-v0.35.0-linux64.tar.gz \
+    && tar -xvzf geckodriver-v0.35.0-linux64.tar.gz \
     && mv geckodriver /usr/local/bin/ \
-    && rm -rf geckodriver-v0.33.0-linux64.tar.gz \
+    && rm -rf geckodriver-v0.35.0-linux64.tar.gz \
     && apt remove --purge build-essential python3-dev wget bzip2 pip -y \
     && apt autoremove -y \
     && apt clean \
