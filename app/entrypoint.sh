@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-gunicorn --chdir /app app:app --bind 0.0.0.0:5000 --workers 3
+gunicorn --access-logfile - --error-logfile - --chdir /app app:app --bind 0.0.0.0:5000 --workers 3
