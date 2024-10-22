@@ -1,36 +1,38 @@
-FROM python:3.10-alpine3.19
+FROM python:3.10.15-slim-bookworm
 
 # DB VARIABLES
-ENV MYSQL_HOST="127.0.0.1"
-ENV MYSQL_USER="admin"
-ENV MYSQL_PASSWORD="admin"
-ENV MYSQL_DATABASE="condominios_db"
-
-#SSH RB
-ENV SSH_USER="admin"
-ENV SSH_PORT="22"
-ENV SSH_PASSWORD="admin"
-
-#Telnet variables
-ENV TELNET_PORT="23"
-ENV TELNET_PASSWORD="admin"
-
-#Http variables
-ENV HTTP_USER="admin"
-ENV HTTP_PASSWORD="admin"
-
-#APP
-ENV DIRLOG="/var/log"
-ENV PREFIXIP="192.168."
+ENV MYSQL_HOST="127.0.0.1" \
+    MYSQL_USER="admin" \
+    MYSQL_PASSWORD="admin" \
+    MYSQL_DATABASE="condominios_db" \
+    SSH_USER="admin" \
+    SSH_PORT="22" \
+    SSH_PASSWORD="admin" \
+    TELNET_PORT="23" \
+    TELNET_PASSWORD="admin" \
+    HTTP_USER="admin" \
+    HTTP_PASSWORD="admin" \
+    DIRLOG="/var/log" \
+    PREFIXIP="192.168."
 
 COPY ./app /app
 
 WORKDIR /app
 
-RUN apk update \
-    && apk add --no-cache firefox bash inetutils-telnet sshpass mariadb-client openssh-client \
+RUN apt update \
+    && apt install -y --no-install-recommends build-essential python3-dev \
+       wget bzip2 telnet sshpass mariadb-client openssh-client iputils-ping firefox-esr \
+    && pip install --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt \
-    && addgroup -S chextip && adduser -S chextip -G chextip \
+    && wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz \
+    && tar -xvzf geckodriver-v0.33.0-linux64.tar.gz \
+    && mv geckodriver /usr/local/bin/ \
+    && rm -rf geckodriver-v0.33.0-linux64.tar.gz \
+    && apt remove --purge build-essential python3-dev wget bzip2 pip -y \
+    && apt autoremove -y \
+    && apt clean \
+    && addgroup --system chextip || true \
+    && adduser --system --no-create-home --gecos "" chextip || true \
     && mkdir -p /var/log/chextip \
     && touch "/var/log/chextip/web_chextip_access.log" \
     && touch "/var/log/chextip/web_chextip_audit.log" \
@@ -39,7 +41,7 @@ RUN apk update \
     && chmod +x /app/entrypoint.sh
 
 USER chextip
-    
+
 EXPOSE 5000
 
 CMD ["/app/entrypoint.sh"]
