@@ -1,8 +1,24 @@
 version: '3.9'
-
 services:
+  nginx:
+    image: nginx:latest
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/etc/timezone:/etc/timezone:ro/"
+      - "./etc/nginx/nginx.conf:/etc/nginx/nginx.conf"
+      - "./etc/nginx/certs:/etc/nginx/certs"
+      - "./etc/nginx/dhparam.pem:/etc/nginx/dhparam.pem"
+      - chextip_static:/app/static
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - chextip
+      - db
+    restart: "always"
+
   chextip:
-    image: dramos777/chextip:2.0
+    image: dramos777/chextip:2.1
     environment:
       MYSQL_DATABASE: "${MYSQL_DATABASE:?Please configure MYSQL_DATABASE in the .env file}"
       MYSQL_USER: "${MYSQL_USER:?Please configure MYSQL_USER in the .env file}"
@@ -18,6 +34,8 @@ services:
       PREFIXIP: "${PREFIXIP:?Please configure PREFIXIP in the .env file}"
     ports:
       - "5000:5000"
+    volumes:
+      - chextip_static:/app/static
 
   db:
     image: mariadb:latest
@@ -33,4 +51,5 @@ services:
 
 volumes:
   db_data:
+  chextip_static:
 
