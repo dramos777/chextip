@@ -96,12 +96,21 @@ add_header X-XSS-Protection "1; mode=block";
     # NGINX server block for HTTP
     server {
         listen *:80;
+
+        location = / {
+            return 301 /login;
+        }
+
         location / {
             proxy_pass http://chextip;
             proxy_set_header Host \$host;
             proxy_set_header X-Real-IP \$remote_addr;
             proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto \$scheme;
+        }
+
+        location /static/ { 
+            alias /app/static/;
         }
 
         # Redirect all HTTP traffic to HTTPS
@@ -115,12 +124,20 @@ add_header X-XSS-Protection "1; mode=block";
         ssl_certificate     /etc/nginx/certs/fullchain.pem;
         ssl_certificate_key /etc/nginx/certs/privkey.pem;
 
+        location = / {
+            return 301 /login;
+        }
+
         location / {
             proxy_pass http://chextip;
             proxy_set_header Host \$host;
             proxy_set_header X-Real-IP \$remote_addr;
             proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto \$scheme;
+        }
+
+        location /static/ { 
+            alias /app/static/;
         }
     }
 }
@@ -159,4 +176,3 @@ main() {
 
 # Run main function
 main
-
