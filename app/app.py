@@ -53,6 +53,14 @@ def create_tables_and_admin():
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+@app.route('/')
+def home():
+    # Verificar se o usuário está autenticado
+    if 'logged_in' in session and session['logged_in']:
+        return "Bem-vindo à sua página principal!"
+    else:
+        return redirect(url_for('login'))
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -291,4 +299,3 @@ def users():
 # Start the Flask application
 if __name__ == '__main__':
     app.run(debug=True)
-
