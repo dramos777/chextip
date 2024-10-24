@@ -249,6 +249,11 @@ def edit_user(user_id):
     if form.validate_on_submit():
         user.username = form.username.data
         user.is_admin = form.is_admin.data
+
+        # Atualiza a senha somente se o campo estiver preenchido
+        if form.password.data:
+            user.set_password(form.password.data)
+
         db.session.commit()
         logging.info(f'User {user.username} updated by {current_user.username}')
         flash(f'Usuário {user.username} editado com sucesso.')
@@ -278,6 +283,10 @@ def edit_condominium(condo_id):
 
 @app.route('/delete_condominium/<int:condo_id>', methods=['POST'])
 def delete_condominium(condo_id):
+    if not current_user.is_admin:
+        flash('Ação não permitida.')
+        return redirect(url_for('dashboard'))
+
     condominium = Condominium.query.get_or_404(condo_id)
     branches = Branch.query.filter_by(condominium_id=condo_id).all()
 

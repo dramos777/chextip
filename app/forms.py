@@ -1,5 +1,5 @@
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired, Length, EqualTo
 from flask_wtf import FlaskForm
 
 class LoginForm(FlaskForm):
@@ -32,6 +32,7 @@ class EditBranchForm(FlaskForm):
 class EditUserForm(FlaskForm):
     username = StringField('Nome de Usuário', validators=[DataRequired()])
     is_admin = BooleanField('Administrador')
+    password = PasswordField('Nova senha (opcional)', validators=[Length(min=6, max=100)])
     submit = SubmitField('Salvar Alterações')
 
 class RegisterCondominiumForm(FlaskForm):
