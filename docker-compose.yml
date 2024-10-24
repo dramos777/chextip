@@ -18,7 +18,7 @@ services:
     restart: "always"
 
   chextip:
-    image: dramos777/chextip:2.1
+    image: dramos777/chextip:2.2
     environment:
       MYSQL_DATABASE: "${MYSQL_DATABASE:?Please configure MYSQL_DATABASE in the .env file}"
       MYSQL_USER: "${MYSQL_USER:?Please configure MYSQL_USER in the .env file}"
