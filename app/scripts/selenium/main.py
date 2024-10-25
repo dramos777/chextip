@@ -139,7 +139,7 @@ def intelbras_ss3530():
         option = Options()
         option.add_argument('--headless')
         firefox = webdriver.Firefox(options=option)
-        firefox.get("URL")
+        firefox.get("http://CURRENTATAIP")
 
         WebDriverWait(firefox, 10).until(
             EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[1]/div[3]/form/div[1]/div/div/input'))
@@ -149,7 +149,7 @@ def intelbras_ss3530():
         username.send_keys("HTTP_USER")
 
         password = firefox.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[1]/div[3]/form/div[2]/div/div/input')
-        password.send_keys("HTTP_PASSWORD2")
+        password.send_keys("HTTP_SS3530_PASS")
         password.send_keys(Keys.RETURN)
 
         time.sleep(5)
@@ -178,7 +178,7 @@ def intelbras_xpe3200():
         option = Options()
         option.add_argument('--headless')
         firefox = webdriver.Firefox(options=option)
-        firefox.get("URL")
+        firefox.get("http://CURRENTATAIP")
 
         WebDriverWait(firefox, 10).until(
             EC.visibility_of_element_located((By.XPATH, '//*[@id="username"]'))
@@ -188,7 +188,7 @@ def intelbras_xpe3200():
         username.send_keys("HTTP_USER")
 
         password = firefox.find_element(By.XPATH, '//*[@id="password"]')
-        password.send_keys("HTTP_PASSWORD3")
+        password.send_keys("HTTP_XPE3200_PASS")
         password.send_keys(Keys.RETURN)
 
         WebDriverWait(firefox, 10).until(
