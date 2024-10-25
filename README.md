@@ -82,13 +82,14 @@ This script works in GNU/Linux environments and supports the following ATA devic
 - Grandstream
     1. HT-503
 - Linksys
-    2. SPA 3000
+    1. SPA 3000
 - Intelbras
     1. ATA 200
     2. GKM2210T
     3. SS3530
     4. XPE3200
 - Khomp
+    1. 16-M4-L
 
 ## History
 **v1.0 - 08/11/2023, Emanuel Dramos:**
