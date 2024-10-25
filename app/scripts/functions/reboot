@@ -40,7 +40,7 @@ Intelbras_xpe3200 () {
 		       && python "$DIRTMP/${RANDON_F}_main.py"
 }
 
-Intelbras_SS3530 () {
+Intelbras_ss3530 () {
 	cat "$SELENIUM/main.py" | \
 			  sed -e "s/CURRENTATAIP/$CURRENTATAIP/g" \
 			      -e "s/HTTP_USER/$HTTP_USER/g" \
