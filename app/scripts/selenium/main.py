@@ -133,5 +133,86 @@ def khomp():
         if firefox:
             firefox.quit()
 
+#Intelbras SS3530 is a face device
+def intelbras_ss3530():
+    try:
+        option = Options()
+        option.add_argument('--headless')
+        firefox = webdriver.Firefox(options=option)
+        firefox.get("URL")
+
+        WebDriverWait(firefox, 10).until(
+            EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[1]/div[3]/form/div[1]/div/div/input'))
+        )
+
+        username = firefox.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[1]/div[3]/form/div[1]/div/div/input')
+        username.send_keys("HTTP_USER")
+
+        password = firefox.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[1]/div[3]/form/div[2]/div/div/input')
+        password.send_keys("HTTP_PASSWORD2")
+        password.send_keys(Keys.RETURN)
+
+        time.sleep(5)
+
+        maintenance = firefox.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[2]/div[1]/div/div/ul/li[11]')
+        maintenance.click()
+
+        reboot_button = firefox.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[2]/div[2]/div/div/div/div[2]/div/div[2]/button/span')
+        reboot_button.click()
+
+        time.sleep(5)
+
+        alert = firefox.switch_to.active_element
+        alert.send_keys(Keys.RETURN)
+
+    except Exception as e:
+        print(f"An exception occurred: {e}")
+
+    finally:
+        if firefox:
+            firefox.quit()
+
+#Intelbras XPE-3200-IP-FACE
+def intelbras_xpe3200():
+    try:
+        option = Options()
+        option.add_argument('--headless')
+        firefox = webdriver.Firefox(options=option)
+        firefox.get("URL")
+
+        WebDriverWait(firefox, 10).until(
+            EC.visibility_of_element_located((By.XPATH, '//*[@id="username"]'))
+        )
+
+        username = firefox.find_element(By.XPATH, '//*[@id="username"]')
+        username.send_keys("HTTP_USER")
+
+        password = firefox.find_element(By.XPATH, '//*[@id="password"]')
+        password.send_keys("HTTP_PASSWORD3")
+        password.send_keys(Keys.RETURN)
+
+        WebDriverWait(firefox, 10).until(
+            EC.visibility_of_element_located((By.XPATH, '//*[@id="tMenu60"]'))
+        )
+
+        update_button = firefox.find_element(By.XPATH, '//*[@id="tMenu60"]')
+        firefox.execute_script("arguments[0].scrollIntoView(true);", update_button)
+        time.sleep(5)
+
+        update_button.click()
+
+        reboot_button = firefox.find_element(By.XPATH, '//*[@id="Reboot"]')
+        reboot_button.click()
+
+        alert = firefox.switch_to.alert
+        alert.accept()
+
+    except Exception as e:
+        print(f"An exception occurred: {e}")
+
+    finally:
+        if firefox:
+            firefox.quit()
+
 # Call your functions
 PYTHON_COMMAND()
