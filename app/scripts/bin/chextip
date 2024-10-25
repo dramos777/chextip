@@ -108,6 +108,14 @@ if [ ! -z "$MODEL" ]; then
 			    && ErrorSSH \
 			    && ClearTMP ;;
 
+	       ss3530) Intelbras_ss3530 \
+			    && ErrorSSH \
+			    && ClearTMP ;;
+
+	           xpe3200) Intelbras_xpe3200 \
+			    && ErrorSSH \
+			    && ClearTMP ;;
+
 			 *) echo "O modelo $2 não é compativel com a API. Por favor, entre em contato com o Administrador!" && exit 0 ;;
 	esac
 fi
