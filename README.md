@@ -57,6 +57,8 @@ HTTP Variables:
 ```
 HTTP_USER="admin"
 HTTP_PASSWORD="admin"
+HTTP_SS3530_PASS="admin"
+HTTP_XPE3200_PASS="admin"
 ```
 Network Prefix:
 ```
