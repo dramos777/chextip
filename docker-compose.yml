@@ -31,6 +31,8 @@ services:
       TELNET_PASSWORD: "${TELNET_PASSWORD:?Please configure TELNET_PASSWORD in the .env file}"
       HTTP_USER: "${HTTP_USER:?Please configure HTTP_USER in the .env file}"
       HTTP_PASSWORD: "${HTTP_PASSWORD:?Please configure HTTP_PASSWORD in the .env file}"
+      HTTP_XPE3200_PASS: "${HTTP_XPE3200_PASS:?Please configure HTTP_PASSWORD in the .env file}"
+      HTTP_SS3530_PASS: "${HTTP_SS3530_PASS:?Please configure HTTP_PASSWORD in the .env file}"
       PREFIXIP: "${PREFIXIP:?Please configure PREFIXIP in the .env file}"
     ports:
       - "5000:5000"
