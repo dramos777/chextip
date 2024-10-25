@@ -22,5 +22,5 @@ GrepIP () {
 }
 
 ClearTMP () {
-	rm -rf $DIRTMP/*
+	rm -rf $DIRTMP/${RANDON_F}_main.py
 }

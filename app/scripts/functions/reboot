@@ -10,8 +10,8 @@ HTTP_PASSWORD: $HTTP_PASSWORD
 			  sed -e "s/CURRENTATAIP/$CURRENTATAIP/g" \
 			      -e "s/HTTP_USER/$HTTP_USER/g" \
 			      -e "s/HTTP_PASSWORD/$HTTP_PASSWORD/g" \
-			      -e "s/PYTHON_COMMAND/intelbras_gkm2210t/g" > "$DIRTMP/main.py" \
-		       && python "$DIRTMP/main.py"
+			      -e "s/PYTHON_COMMAND/intelbras_gkm2210t/g" > "$DIRTMP/${RANDON_F}_main.py" \
+		       && python "$DIRTMP/${RANDON_F}_main.py"
 }
 
 Ata200 () {
@@ -19,17 +19,36 @@ Ata200 () {
 			  sed -e "s/CURRENTATAIP/$CURRENTATAIP/g" \
 			      -e "s/HTTP_USER/$HTTP_USER/g" \
 			      -e "s/HTTP_PASSWORD/$HTTP_PASSWORD/g" \
-			      -e "s/PYTHON_COMMAND/intelbras_ata200/g" > "$DIRTMP/main.py" \
-		       && python "$DIRTMP/main.py"
+			      -e "s/PYTHON_COMMAND/intelbras_ata200/g" > "$DIRTMP/${RANDON_F}_main.py" \
+		       && python "$DIRTMP/${RANDON_F}_main.py"
 }
 
 Khomp () {
 	cat "$SELENIUM/main.py" | \
 			  sed -e "s/CURRENTATAIP/$CURRENTATAIP:8085/g" \
 			      -e "s/HTTP_PASSWORD/$HTTP_PASSWORD/g" \
-			      -e "s/PYTHON_COMMAND/khomp/g" > "$DIRTMP/main.py" \
-		       && python "$DIRTMP/main.py"
+			      -e "s/PYTHON_COMMAND/khomp/g" > "$DIRTMP/${RANDON_F}_main.py" \
+		       && python "$DIRTMP/${RANDON_F}_main.py"
 }
+
+Intelbras_xpe3200 () {
+	cat "$SELENIUM/main.py" | \
+			  sed -e "s/CURRENTATAIP/$CURRENTATAIP/g" \
+			      -e "s/HTTP_USER/$HTTP_USER/g" \
+			      -e "s/HTTP_XPE3200_PASS/$HTTP_XPE3200_PASS/g" \
+			      -e "s/PYTHON_COMMAND/intelbras_xpe3200/g" > "$DIRTMP/${RANDON_F}_main.py" \
+		       && python "$DIRTMP/${RANDON_F}_main.py"
+}
+
+Intelbras_SS3530 () {
+	cat "$SELENIUM/main.py" | \
+			  sed -e "s/CURRENTATAIP/$CURRENTATAIP/g" \
+			      -e "s/HTTP_USER/$HTTP_USER/g" \
+			      -e "s/HTTP_SS3530_PASS/$HTTP_SS3530_PASS/g" \
+			      -e "s/PYTHON_COMMAND/intelbras_ss3530/g" > "$DIRTMP/${RANDON_F}_main.py" \
+		       && python "$DIRTMP/${RANDON_F}_main.py"
+}
+
 
 Grandstream () {
 	(
