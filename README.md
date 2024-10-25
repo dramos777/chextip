@@ -80,14 +80,14 @@ The script retrieves the necessary data from the database, applies the IP change
 This script works in GNU/Linux environments and supports the following ATA devices:
 
 - Grandstream
-    HT-503
+    1. HT-503
 - Linksys
-    SPA 3000
+    2. SPA 3000
 - Intelbras
-    ATA 200
-    GKM2210T
-    SS3530
-    XPE3200
+    1. ATA 200
+    2. GKM2210T
+    3. SS3530
+    4. XPE3200
 - Khomp
 
 ## History
