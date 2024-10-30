@@ -112,6 +112,10 @@ if [ ! -z "$MODEL" ]; then
 			    && ErrorSSH \
 			    && ClearTMP ;;
 
+	       ss3532) Intelbras_ss3532 \
+			    && ErrorSSH \
+			    && ClearTMP ;;
+
 	           xpe3200) Intelbras_xpe3200 \
 			    && ErrorSSH \
 			    && ClearTMP ;;
