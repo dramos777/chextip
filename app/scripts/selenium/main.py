@@ -173,7 +173,7 @@ def intelbras_ss3530():
             firefox.quit()
 
 #Intelbras SS3532 is a face device
-def intelbras_ss3530():
+def intelbras_ss3532():
     try:
         option = Options()
         option.add_argument('--headless')
