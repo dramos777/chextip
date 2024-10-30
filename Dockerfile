@@ -14,6 +14,7 @@ ENV MYSQL_HOST="127.0.0.1" \
     HTTP_PASSWORD="admin" \
     HTTP_XPE3200_PASS="admin" \
     HTTP_SS3530_PASS="admin" \
+    HTTP_SS3532_PASS="admin" \
     DIRLOG="/var/log" \
     PREFIXIP="192.168."
 
