@@ -22,6 +22,7 @@ REBOOT_COMMAND="reboot"
 #HTTP_PASSWORD="admin"
 #HTTP_XPE3200_PASS="admin"
 #HTTP_SS3530_PASS="admin"
+#HTTP_SS3532_PASS="admin"
 
 #Python
 SELENIUM="/app/scripts/selenium"
