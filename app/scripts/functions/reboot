@@ -49,6 +49,14 @@ Intelbras_ss3530 () {
 		       && python "$DIRTMP/${RANDON_F}_main.py"
 }
 
+Intelbras_ss3532 () {
+	cat "$SELENIUM/main.py" | \
+			  sed -e "s/CURRENTATAIP/$CURRENTATAIP/g" \
+			      -e "s/HTTP_USER/$HTTP_USER/g" \
+			      -e "s/HTTP_SS3532_PASS/$HTTP_SS3532_PASS/g" \
+			      -e "s/PYTHON_COMMAND/intelbras_ss3532/g" > "$DIRTMP/${RANDON_F}_main.py" \
+		       && python "$DIRTMP/${RANDON_F}_main.py"
+}
 
 Grandstream () {
 	(
