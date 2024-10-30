@@ -11,7 +11,7 @@ if grep -q 49 "$F_ATAIPS"; then
 fi
 
 MODEL=""
-[ ! -z "$2" ] && MODEL="$(echo $2|tr '[:upper:]' '[:lower:]')"
+[ ! -z "$2" ] && MODEL="$(echo $2|tr '[:upper:]' '[:lower:]'|sed 's/[ \-_,.]//g')"
 #Ensure at least one argument
 [ -z "$1" ] && echo "Argument needed!" && exit 1
 
@@ -83,7 +83,7 @@ SSH_COMMAND="/ip dhcp-server lease set address="$ATAIP" [find where comment~\""$
 #Rebooting ATA
 if [ ! -z "$MODEL" ]; then
 	case "$MODEL" in
-	       	grandstream|ht814) Grandstream 2>&1 > /dev/null \
+	       	grandstream|ht813|ht814|ht815|ht503|gxw|gxw410x) Grandstream 2>&1 > /dev/null \
 			    && CommandSSH \
 			    && ErrorSSH \
 			    && ClearTMP ;;
@@ -103,7 +103,7 @@ if [ ! -z "$MODEL" ]; then
 			    && ErrorSSH \
 			    && ClearTMP ;;
 
-		khomp) Khomp 2>&1 > /dev/null\
+		khomp|16m4l) Khomp 2>&1 > /dev/null\
 			    && [ "$?" = 0 ] && CommandSSH \
 			    && ErrorSSH \
 			    && ClearTMP ;;
