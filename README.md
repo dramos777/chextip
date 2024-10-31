@@ -88,6 +88,7 @@ This script works in GNU/Linux environments and supports the following ATA devic
     5. GXW410X
 - Linksys
     1. SPA 3000
+    2. SPA 3102
 - Intelbras
     1. ATA 200
     2. GKM2210T

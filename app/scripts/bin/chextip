@@ -89,7 +89,7 @@ if [ ! -z "$MODEL" ]; then
 			    && ErrorSSH \
 			    && ClearTMP ;;
 
-		linksys|spa3000) Linksys 2>&1 > /dev/null \
+		linksys|spa3000|spa3102) Linksys 2>&1 > /dev/null \
 			    && CommandSSH \
 			    && ErrorSSH \
 			    && ClearTMP ;;
