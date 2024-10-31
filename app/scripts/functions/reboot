@@ -1,5 +1,6 @@
 # Reboot functions
 Gkm2210t () {
+	RANDOM_F="$RANDOM"
 	echo "
 SELENIUM: $SELENIUM
 CURRENTATAIP: $CURRENTATAIP
@@ -10,52 +11,57 @@ HTTP_PASSWORD: $HTTP_PASSWORD
 			  sed -e "s/CURRENTATAIP/$CURRENTATAIP/g" \
 			      -e "s/HTTP_USER/$HTTP_USER/g" \
 			      -e "s/HTTP_PASSWORD/$HTTP_PASSWORD/g" \
-			      -e "s/PYTHON_COMMAND/intelbras_gkm2210t/g" > "$DIRTMP/$(echo "$RANDOM")_main.py" \
-		       && python "$DIRTMP/$(echo "$RANDOM")_main.py"
+			      -e "s/PYTHON_COMMAND/intelbras_gkm2210t/g" > "$DIRTMP/${RANDOM_F}_main.py" \
+		       && python "$DIRTMP/${RANDOM_F}_main.py"
 }
 
 Ata200 () {
+	RANDOM_F="$RANDOM"
 	cat "$SELENIUM/main.py" | \
 			  sed -e "s/CURRENTATAIP/$CURRENTATAIP/g" \
 			      -e "s/HTTP_USER/$HTTP_USER/g" \
 			      -e "s/HTTP_PASSWORD/$HTTP_PASSWORD/g" \
-			      -e "s/PYTHON_COMMAND/intelbras_ata200/g" > "$DIRTMP/$(echo "$RANDOM")_main.py" \
-		       && python "$DIRTMP/$(echo "$RANDOM")_main.py"
+			      -e "s/PYTHON_COMMAND/intelbras_ata200/g" > "$DIRTMP/${RANDOM_F}_main.py" \
+		       && python "$DIRTMP/${RANDOM_F}_main.py"
 }
 
 Khomp () {
+	RANDOM_F="$RANDOM"
 	cat "$SELENIUM/main.py" | \
 			  sed -e "s/CURRENTATAIP/$CURRENTATAIP:8085/g" \
 			      -e "s/HTTP_PASSWORD/$HTTP_PASSWORD/g" \
-			      -e "s/PYTHON_COMMAND/khomp/g" > "$DIRTMP/$(echo "$RANDOM")_main.py" \
-		       && python "$DIRTMP/$(echo "$RANDOM")_main.py"
+			      -e "s/PYTHON_COMMAND/khomp/g" > "$DIRTMP/${RANDOM_F}_main.py" \
+		       && python "$DIRTMP/${RANDOM_F}_main.py"
 }
 
 Intelbras_xpe3200 () {
+	RANDOM_F="$RANDOM"
 	cat "$SELENIUM/main.py" | \
 			  sed -e "s/CURRENTATAIP/$CURRENTATAIP/g" \
 			      -e "s/HTTP_USER/$HTTP_USER/g" \
 			      -e "s/HTTP_XPE3200_PASS/$HTTP_XPE3200_PASS/g" \
-			      -e "s/PYTHON_COMMAND/intelbras_xpe3200/g" > "$DIRTMP/$(echo "$RANDOM")_main.py" \
-		       && python "$DIRTMP/$(echo "$RANDOM")_main.py"
+			      -e "s/PYTHON_COMMAND/intelbras_xpe3200/g" > "$DIRTMP/${RANDOM_F}_main.py" \
+		       && python "$DIRTMP/${RANDOM_F}_main.py"
 }
 
 Intelbras_ss3530 () {
+	RANDOM_F="$RANDOM"
 	cat "$SELENIUM/main.py" | \
 			  sed -e "s/CURRENTATAIP/$CURRENTATAIP/g" \
 			      -e "s/HTTP_USER/$HTTP_USER/g" \
 			      -e "s/HTTP_SS3530_PASS/$HTTP_SS3530_PASS/g" \
-			      -e "s/PYTHON_COMMAND/intelbras_ss3530/g" > "$DIRTMP/$(echo "$RANDOM")_main.py" \
-		       && python "$DIRTMP/$(echo "$RANDOM")_main.py"
+			      -e "s/PYTHON_COMMAND/intelbras_ss3530/g" > "$DIRTMP/${RANDOM_F}_main.py" \
+		       && python "$DIRTMP/${RANDOM_F}_main.py"
 }
 
 Intelbras_ss3532 () {
+	RANDOM_F="$RANDOM"
 	cat "$SELENIUM/main.py" | \
 			  sed -e "s/CURRENTATAIP/$CURRENTATAIP/g" \
 			      -e "s/HTTP_USER/$HTTP_USER/g" \
 			      -e "s/HTTP_SS3532_PASS/$HTTP_SS3532_PASS/g" \
-			      -e "s/PYTHON_COMMAND/intelbras_ss3532/g" > "$DIRTMP/$(echo "$RANDOM")_main.py" \
-		       && python "$DIRTMP/$(echo "$RANDOM")_main.py"
+			      -e "s/PYTHON_COMMAND/intelbras_ss3532/g" > "$DIRTMP/${RANDOM_F}_main.py" \
+		       && python "$DIRTMP/${RANDOM_F}_main.py"
 }
 
 Grandstream () {
