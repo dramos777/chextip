@@ -193,7 +193,13 @@ def intelbras_ss3532():
         password.send_keys("HTTP_SS3530_PASS")
         password.send_keys(Keys.RETURN)
 
-        time.sleep(5)
+        time.sleep(7)
+
+        WebDriverWait(firefox, 15).until(
+            EC.visibility_of_element_located((By.XPATH, '/html/body/div/div[2]/div[2]/div[1]/div/div/ul/li[15]'))
+        )
+
+        time.sleep(7)
 
         maintenance = firefox.find_element(By.XPATH, '/html/body/div/div[2]/div[2]/div[1]/div/div/ul/li[15]')
         maintenance.click()
