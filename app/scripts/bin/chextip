@@ -4,6 +4,7 @@ source "/app/scripts/var/environment"
 
 echo "=================================================================="
 echo "Reinicialização do ramal $1 iniciada. ($STARTDATE $STARTTIME)"
+echo "=================================================================="
 
 # Ensure IP available to change
 if grep -q 49 "$F_ATAIPS"; then
@@ -44,7 +45,7 @@ ErrorSSH
 
 ping -c5 "$CURRENTATAIP" 2>&1 > /dev/null
 
-[ "$?" != 0 ] && echo "Ramal $PHONE_EXTENSION - MODELO: $2 inacessível. Problema precisa ser analisado no local"
+[ "$?" != 0 ] && echo "Ramal $PHONE_EXTENSION - MODELO: $2 inacessível. Problema precisa ser analisado no local" && exit 0
 
 #ATA IP for telnet reboot
 TELNET_HOST="$CURRENTATAIP"
@@ -128,7 +129,6 @@ fi
 
 TIME="$(date "+%H:%M:%S")"
 
-echo "=================================================================="
 echo "Reinicialização do ramal $1 finalizada. ($DATE $TIME)"
 echo "=================================================================="
 echo "Por favor, aguarde 2min e realize um novo teste no ramal $1"
