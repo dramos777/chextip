@@ -135,6 +135,7 @@ def khomp():
 
 #Intelbras SS3530 is a face device
 def intelbras_ss3530():
+    firefox = None
     try:
         option = Options()
         option.add_argument('--headless')
@@ -174,6 +175,7 @@ def intelbras_ss3530():
 
 #Intelbras SS3532 is a face device
 def intelbras_ss3532():
+    firefox = None
     try:
         option = Options()
         option.add_argument('--headless')
@@ -213,6 +215,7 @@ def intelbras_ss3532():
 
 #Intelbras XPE-3200-IP-FACE
 def intelbras_xpe3200():
+    firefox = None
     try:
         option = Options()
         option.add_argument('--headless')
