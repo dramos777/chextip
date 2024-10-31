@@ -126,7 +126,8 @@ fi
 
 [ ! -z "$(ls -A $DIRTMP/)" ] && rm -rf $DIRTMP/*
 
-#echo "$STARTDATE $STARTTIME-$TIME    $PHONE_EXTENSION $MODEL    $CURRENTATAIP >> $ATAIP"
+TIME="$(date "+%H:%M:%S")"
+
 echo "=================================================================="
 echo "Reinicialização do ramal $1 finalizada. ($DATE $TIME)"
 echo "=================================================================="
