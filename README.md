@@ -58,6 +58,7 @@ HTTP Variables:
 HTTP_USER="admin"
 HTTP_PASSWORD="admin"
 HTTP_SS3530_PASS="admin"
+HTTP_SS3532_PASS="admin"
 HTTP_XPE3200_PASS="admin"
 ```
 Network Prefix:
@@ -81,13 +82,18 @@ This script works in GNU/Linux environments and supports the following ATA devic
 
 - Grandstream
     1. HT-503
+    2. HT813
+    3. HT814
+    4. HT815
+    5. GXW410X
 - Linksys
     1. SPA 3000
 - Intelbras
     1. ATA 200
     2. GKM2210T
-    3. SS3530
-    4. XPE3200
+    3. XPE3200
+    4. SS3530
+    5. SS3532
 - Khomp
     1. 16-M4-L
 
