@@ -33,6 +33,7 @@ services:
       HTTP_PASSWORD: "${HTTP_PASSWORD:?Please configure HTTP_PASSWORD in the .env file}"
       HTTP_XPE3200_PASS: "${HTTP_XPE3200_PASS:?Please configure HTTP_PASSWORD in the .env file}"
       HTTP_SS3530_PASS: "${HTTP_SS3530_PASS:?Please configure HTTP_PASSWORD in the .env file}"
+      HTTP_SS3532_PASS: "${HTTP_SS3532_PASS:?Please configure HTTP_PASSWORD in the .env file}"
       PREFIXIP: "${PREFIXIP:?Please configure PREFIXIP in the .env file}"
     ports:
       - "5000:5000"
