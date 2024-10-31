@@ -128,7 +128,7 @@ fi
 
 #echo "$STARTDATE $STARTTIME-$TIME    $PHONE_EXTENSION $MODEL    $CURRENTATAIP >> $ATAIP"
 echo "=================================================================="
-echo "Reinicialização do ramal $1 finalizada. ($STARTDATE $STARTTIME)"
+echo "Reinicialização do ramal $1 finalizada. ($DATE $TIME)"
 echo "=================================================================="
 echo "Por favor, aguarde 2min e realize um novo teste no ramal $1"
 echo "=================================================================="
