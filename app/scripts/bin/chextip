@@ -75,7 +75,7 @@ for ip in $(echo $ATAIP | tr ":" "\n");do
 done
 
 #Remove connections
-SSH_COMMAND="\"\/ip firewall connection remove [find src-address~\\\\\""$CURRENTATAIP"\\\\\""]\"
+SSH_COMMAND="/ip firewall connection remove [find src-address~\""$CURRENTATAIP"\"]"
 CommandSSH 2>&1 > /dev/null
 
 #Changing variable SSH_COMMAND to change ATA IP Address
