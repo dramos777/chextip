@@ -102,7 +102,7 @@ def khomp():
         option = Options()
         option.add_argument('--headless')
         firefox = webdriver.Firefox(options=option)
-        firefox.get("http://CURRENTATAIP")
+        firefox.get("http://CURRENTATAIP:8085")
 
         WebDriverWait(firefox, 10).until(
             EC.visibility_of_element_located(("name", "pass"))
