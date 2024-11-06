@@ -1,12 +1,6 @@
 # Reboot functions
 Gkm2210t () {
 	RANDOM_F="$RANDOM"
-	echo "
-SELENIUM: $SELENIUM
-CURRENTATAIP: $CURRENTATAIP
-HTTP_USER: $HTTP_USER
-HTTP_PASSWORD: $HTTP_PASSWORD
-"
 	cat "$SELENIUM/main.py" | \
 			  sed -e "s/CURRENTATAIP/$CURRENTATAIP/g" \
 			      -e "s/HTTP_USER/$HTTP_USER/g" \
