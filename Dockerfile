@@ -24,7 +24,7 @@ WORKDIR /app
 
 RUN apt update \
     && apt install -y --no-install-recommends build-essential python3-dev \
-       wget bzip2 telnet sshpass mariadb-client openssh-client iputils-ping firefox-esr \
+       wget bzip2 telnet sshpass mariadb-client openssh-client iputils-ping firefox-esr curl \
     && pip install --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt \
     && wget https://github.com/mozilla/geckodriver/releases/download/v0.35.0/geckodriver-v0.35.0-linux64.tar.gz \
