@@ -77,7 +77,7 @@ def login():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    condominiums = Condominium.query.all()
+    condominiums = Condominium.query.order_by(Condominium.name.asc()).all()
     return render_template('dashboard.html', condominiums=condominiums)
 
 @app.route('/logout', methods=['POST'])
