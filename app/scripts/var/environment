@@ -22,6 +22,8 @@ REBOOT_COMMAND="reboot"
 #HTTP_SS3532_PASS="admin"
 #LINEAR_USER=admin
 #LINEAR_PASSWORD=admin
+#NICE_USER=admin
+#NICE_PASSWORD=admin
 
 #Python
 SELENIUM="/app/scripts/selenium"

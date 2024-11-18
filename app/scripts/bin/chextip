@@ -125,6 +125,10 @@ if [ ! -z "$MODEL" ]; then
 			    && ErrorSSH \
 			    && ClearTMP ;;
 
+	           nice) NiceModule \
+			    && ErrorSSH \
+			    && ClearTMP ;;
+
 			 *) echo "O modelo $2 não é compativel com a API. Por favor, entre em contato com o Administrador!" && exit 0 ;;
 	esac
 fi

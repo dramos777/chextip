@@ -98,4 +98,14 @@ LinearModule () {
 		       && python "$DIRTMP/${RANDOM_F}_main.py"
 }
 
+NiceModule () {
+	RANDOM_F="$RANDOM"
+	cat "$SELENIUM/main.py" | \
+			  sed -e "s/CURRENTDEVICEIP/$CURRENTDEVICEIP/g" \
+			      -e "s/NICE_USER/$NICE_USER/g" \
+			      -e "s/NICE_PASSWORD/$NICE_PASSWORD/g" \
+			      -e "s/PYTHON_COMMAND/nice_module/g" > "$DIRTMP/${RANDOM_F}_main.py" \
+		       && python "$DIRTMP/${RANDOM_F}_main.py"
+}
+
 

@@ -315,5 +315,53 @@ def linear_module():
         if firefox:
             firefox.quit()
 
+# Nice Module
+def nice_module():
+    firefox = None
+    try:
+        option = Options()
+        option.add_argument('--headless')
+
+        firefox = webdriver.Firefox(options=option)
+        firefox.get("http://NICE_USER:NICE_PASSWORD@CURRENTDEVICEIP")
+
+        try:
+            WebDriverWait(firefox, 10).until(
+                EC.visibility_of_element_located((By.XPATH, '/html/body/div[2]/ul/li[2]/a'))
+            )
+        except Exception:
+            firefox.refresh()
+            WebDriverWait(firefox, 10).until(
+                EC.visibility_of_element_located((By.XPATH, '/html/body/div[2]/ul/li[2]/a'))
+            )
+
+        network_button = firefox.find_element(By.XPATH, '/html/body/div[2]/ul/li[2]/a')
+        network_button.click()
+
+        try:
+            WebDriverWait(firefox, 10).until(
+                EC.visibility_of_element_located((By.XPATH, '/html/body/div[3]/form/button'))
+            )
+        except Exception:
+            firefox.refresh()
+            WebDriverWait(firefox, 10).until(
+                EC.visibility_of_element_located((By.XPATH, '/html/body/div[3]/form/button'))
+            )
+
+        save_button = firefox.find_element(By.XPATH, '/html/body/div[3]/form/button')
+        save_button.click()
+
+# Wait until servername1 has finished
+#        WebDriverWait(firefox, 5).until(
+#            EC.staleness_of(servername1) 
+#        )
+        
+    except Exception as e:
+        print(f"An exception occurred: {e}")
+
+    finally:
+        if firefox:
+            firefox.quit()
+
 # Call your functions
 PYTHON_COMMAND()
