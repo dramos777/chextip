@@ -28,6 +28,10 @@ class Condominium(db.Model):
     rb_host_ip = db.Column(db.String(45), nullable=False)
     branches = db.relationship('Branch', backref='condominium', lazy=True)
 
+     __mapper_args__ = {
+        'order_by': name.asc()
+        }
+
     def __str__(self):
         return self.name
 
