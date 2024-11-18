@@ -40,15 +40,15 @@ unset TMPATAIP
 SSH_COMMAND="/ip dhcp-server lease print where comment~\"$1\""
 
 #Get current ATA IP 
-CURRENTATAIP="$(CommandSSH | GrepIP)"
+CURRENTDEVICEIP="$(CommandSSH | GrepIP)"
 ErrorSSH
 
-ping -c5 "$CURRENTATAIP" 2>&1 > /dev/null
+ping -c5 "$CURRENTDEVICEIP" 2>&1 > /dev/null
 
 [ "$?" != 0 ] && echo "Ramal $PHONE_EXTENSION - MODELO: $2 inacessível. Problema precisa ser analisado no local" && exit 0
 
 #ATA IP for telnet reboot
-TELNET_HOST="$CURRENTATAIP"
+TELNET_HOST="$CURRENTDEVICEIP"
 
 #### Execution ####
 #Command to discovery all active ATAs IPs
@@ -76,7 +76,7 @@ for ip in $(echo $ATAIP | tr ":" "\n");do
 done
 
 #Remove connections
-SSH_COMMAND="/ip firewall connection remove [find src-address~\""$CURRENTATAIP"\"]"
+SSH_COMMAND="/ip firewall connection remove [find src-address~\""$CURRENTDEVICEIP"\"]"
 CommandSSH 2>&1 > /dev/null
 
 #Changing variable SSH_COMMAND to change ATA IP Address
@@ -118,6 +118,10 @@ if [ ! -z "$MODEL" ]; then
 			    && ClearTMP ;;
 
 	           xpe3200) Intelbras_xpe3200 \
+			    && ErrorSSH \
+			    && ClearTMP ;;
+
+	           linear) LinearModule \
 			    && ErrorSSH \
 			    && ClearTMP ;;
 

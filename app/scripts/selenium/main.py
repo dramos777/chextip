@@ -16,7 +16,7 @@ def intelbras_gkm2210t():
         option = Options()
         option.add_argument('--headless')
         firefox = webdriver.Firefox(options=option)
-        firefox.get("http://HTTP_USER:HTTP_PASSWORD@CURRENTATAIP")
+        firefox.get("http://HTTP_USER:HTTP_PASSWORD@CURRENTDEVICEIP")
 
         WebDriverWait(firefox, 10).until(
             EC.visibility_of_element_located(("id", "linkMenu7"))
@@ -43,7 +43,7 @@ def intelbras_ata200():
         option = Options()
         option.add_argument('--headless')
         firefox = webdriver.Firefox(options=option)
-        firefox.get("http://CURRENTATAIP")
+        firefox.get("http://CURRENTDEVICEIP")
 
         WebDriverWait(firefox, 10).until(
             EC.visibility_of_element_located(("name", "username"))
@@ -102,7 +102,7 @@ def khomp():
         option = Options()
         option.add_argument('--headless')
         firefox = webdriver.Firefox(options=option)
-        firefox.get("http://CURRENTATAIP:8085")
+        firefox.get("http://CURRENTDEVICEIP:8085")
 
         WebDriverWait(firefox, 10).until(
             EC.visibility_of_element_located(("name", "pass"))
@@ -140,7 +140,7 @@ def intelbras_ss3530():
         option = Options()
         option.add_argument('--headless')
         firefox = webdriver.Firefox(options=option)
-        firefox.get("http://CURRENTATAIP")
+        firefox.get("http://CURRENTDEVICEIP")
 
         WebDriverWait(firefox, 10).until(
             EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[1]/div[3]/form/div[1]/div/div/input'))
@@ -180,7 +180,7 @@ def intelbras_ss3532():
         option = Options()
         option.add_argument('--headless')
         firefox = webdriver.Firefox(options=option)
-        firefox.get("http://CURRENTATAIP")
+        firefox.get("http://CURRENTDEVICEIP")
 
         WebDriverWait(firefox, 10).until(
             EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[1]/div[3]/form/div[1]/div/div/input'))
@@ -226,7 +226,7 @@ def intelbras_xpe3200():
         option = Options()
         option.add_argument('--headless')
         firefox = webdriver.Firefox(options=option)
-        firefox.get("http://CURRENTATAIP")
+        firefox.get("http://CURRENTDEVICEIP")
 
         WebDriverWait(firefox, 10).until(
             EC.visibility_of_element_located((By.XPATH, '//*[@id="username"]'))
@@ -254,6 +254,53 @@ def intelbras_xpe3200():
 
         alert = firefox.switch_to.alert
         alert.accept()
+
+    except Exception as e:
+        print(f"An exception occurred: {e}")
+
+    finally:
+        if firefox:
+            firefox.quit()
+
+
+# Controllers Devices
+
+# Linear Module
+def linear_module():
+    firefox = None
+    try:
+        option = Options()
+        option.add_argument('--headless')
+        
+        firefox = webdriver.Firefox(options=option)
+        firefox.get("http://LINEAR_USER:LINEAR_PASSWORD@CURRENTDEVICEIP")
+
+        WebDriverWait(firefox, 10).until(
+            EC.visibility_of_element_located((By.XPATH, '/html/body/div/div/div/div/div/div[1]/a[2]'))
+        )
+
+        network_button = firefox.find_element(By.XPATH, '/html/body/div/div/div/div/div/div[1]/a[2]')
+        network_button.click()
+
+        WebDriverWait(firefox, 10).until(
+            EC.visibility_of_element_located((By.XPATH, '//*[@id="e_dns1"]'))
+        )
+
+        servername1 = firefox.find_element(By.XPATH, '//*[@id="e_dns1"]')
+        servername1.clear()
+
+        servername1.send_keys("8.8.8.8")
+
+        time.sleep(5)
+
+# Wait until servername1 has finished
+#        WebDriverWait(firefox, 5).until(
+#            EC.staleness_of(servername1)
+#        )
+
+        servername1.send_keys(Keys.RETURN)
+
+        time.sleep(5)
 
     except Exception as e:
         print(f"An exception occurred: {e}")
