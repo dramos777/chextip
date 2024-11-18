@@ -275,9 +275,15 @@ def linear_module():
         firefox = webdriver.Firefox(options=option)
         firefox.get("http://LINEAR_USER:LINEAR_PASSWORD@CURRENTDEVICEIP")
 
-        WebDriverWait(firefox, 10).until(
-            EC.visibility_of_element_located((By.XPATH, '/html/body/div/div/div/div/div/div[1]/a[2]'))
-        )
+        try:
+            WebDriverWait(firefox, 10).until(
+                EC.visibility_of_element_located((By.XPATH, '/html/body/div/div/div/div/div/div[1]/a[2]'))
+            )
+        except Exception:
+            firefox.refresh()
+            WebDriverWait(firefox, 10).until(
+                EC.visibility_of_element_located((By.XPATH, '/html/body/div/div/div/div/div/div[1]/a[2]'))
+            )
 
         network_button = firefox.find_element(By.XPATH, '/html/body/div/div/div/div/div/div[1]/a[2]')
         network_button.click()
