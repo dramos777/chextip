@@ -15,7 +15,7 @@ class RegisterUserForm(FlaskForm):
 
 class RegisterBranchForm(FlaskForm):
     location = StringField('Local', validators=[DataRequired()])
-    branch_number = StringField('Número do Ramal', validators=[DataRequired()])
+    branch_number = StringField('Identificador / Número', validators=[DataRequired()])
     model = StringField('Modelo', validators=[DataRequired()])
     manufacturer = StringField('Fabricante', validators=[DataRequired()])
     condominium_name = SelectField('Condomínio', choices=[], coerce=int, validators=[DataRequired()])
@@ -24,7 +24,7 @@ class RegisterBranchForm(FlaskForm):
 
 class EditBranchForm(FlaskForm):
     location = StringField('Local', validators=[DataRequired()])
-    branch_number = StringField('Número do Ramal', validators=[DataRequired()])
+    branch_number = StringField('Identificador / Número', validators=[DataRequired()])
     model = StringField('Modelo', validators=[DataRequired()])
     manufacturer = StringField('Fabricante', validators=[DataRequired()])
     submit = SubmitField('Salvar Alterações')
