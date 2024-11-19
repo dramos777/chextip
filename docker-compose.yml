@@ -45,6 +45,8 @@ services:
       - "5000:5000"
     volumes:
       - chextip_static:/app/static
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
     networks:
       - chextip-network
 
@@ -59,6 +61,8 @@ services:
 #      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
     networks:
       - chextip-network
 
