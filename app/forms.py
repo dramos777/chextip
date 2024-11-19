@@ -20,7 +20,7 @@ class RegisterBranchForm(FlaskForm):
     manufacturer = StringField('Fabricante', validators=[DataRequired()])
     condominium_name = SelectField('Condomínio', choices=[], coerce=int, validators=[DataRequired()])
     #condominium_id = StringField('ID do Condomínio', validators=[DataRequired()])
-    submit = SubmitField('Cadastrar Ramal')
+    submit = SubmitField('Cadastrar Dispositivo')
 
 class EditBranchForm(FlaskForm):
     location = StringField('Local', validators=[DataRequired()])
