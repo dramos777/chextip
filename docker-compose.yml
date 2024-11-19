@@ -16,6 +16,8 @@ services:
       - chextip
       - db
     restart: "always"
+    networks:
+      - chextip-network
 
   chextip:
     image: dramos777/chextip:2.3
@@ -43,6 +45,8 @@ services:
       - "5000:5000"
     volumes:
       - chextip_static:/app/static
+    networks:
+      - chextip-network
 
   db:
     image: mariadb:latest
@@ -55,8 +59,16 @@ services:
 #      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+    networks:
+      - chextip-network
 
 volumes:
   db_data:
   chextip_static:
 
+networks:
+  chextip-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.19.0.0/16
