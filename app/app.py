@@ -91,7 +91,9 @@ def logout():
 @login_required
 def show_condominium(condo_id):
     condo = Condominium.query.get_or_404(condo_id)
-    return render_template('condominium.html', condo=condo)
+    branches = Branch.query.filter_by(condominium_id=condo_id).order_by(Branch.branch_number.asc()).all()
+
+    return render_template('condominium.html', condo=condo, branches=branches)
 
 @app.route('/register_branch', methods=['GET', 'POST'])
 @login_required
@@ -302,8 +304,8 @@ def delete_condominium(condo_id):
 @app.route('/users')
 @login_required
 def users():
-    all_users = User.query.all()  # Obtém todos os usuários do banco de dados
-    return render_template('users.html', users=all_users)  # Renderiza o template com a lista de usuários
+    all_users = User.query.order_by(User.username.asc()).all()
+    return render_template('users.html', users=all_users)
 
 # Start the Flask application
 if __name__ == '__main__':

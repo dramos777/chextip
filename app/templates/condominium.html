@@ -2,12 +2,11 @@
 
 {% block content %}
     <h2>{{ condo.name }}</h2>
-<!-- <h3>Ramal(s)</h3> -->
     <a class="btn btn-primary" href="{{ url_for('register_branch') }}">Cadastrar Dispositivo</a>
     <ul class="list-group">
-        {% for branch in condo.branches %}
+        {% for branch in branches %}
             <li class="list-group-item">
-	      {{ branch.branch_number }} - {{ branch.location }} ({{ branch.model }})
+                {{ branch.branch_number }} - {{ branch.location }} ({{ branch.model }})
                 <form action="{{ url_for('delete_branch', branch_id=branch.id) }}" method="POST" style="display:inline;">
                     <input type="submit" class="btn btn-danger btn-sm" value="Remover">
                 </form>

@@ -3,7 +3,7 @@
 source "/app/scripts/var/environment"
 
 echo "=================================================================="
-echo "Reinicialização do ramal $1 iniciada. ($STARTDATE $STARTTIME)"
+echo "Reinicialização do ramal/dispositivo $1 iniciada. ($STARTDATE $STARTTIME)"
 echo "=================================================================="
 
 # Ensure IP available to change
@@ -24,7 +24,7 @@ MODEL=""
 PHONE_EXTENSION="$1"
 
 #RouterOS IP
-SSH_HOST=$(mysql -h "$MYSQL_HOST" -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -se "SELECT c.rb_host_ip FROM condominium c JOIN branch b ON c.id = b.condominium_id WHERE b.branch_number = "$BRANCH_NUMBER";" -N)
+SSH_HOST=$(mysql -h "$MYSQL_HOST" -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -se "SELECT c.rb_host_ip FROM condominium c JOIN branch b ON c.id = b.condominium_id WHERE b.branch_number = "\'$BRANCH_NUMBER\'";" -N)
 
 #Configuring ATA IPS to swap for
 NETRANGE="$(echo $SSH_HOST|cut -d"." -f3)"
@@ -137,8 +137,8 @@ fi
 
 TIME="$(date "+%H:%M:%S")"
 
-echo "Reinicialização do ramal $1 finalizada. ($DATE $TIME)"
+echo "Reinicialização do ramal/dispositivo $1 finalizada. ($DATE $TIME)"
 echo "=================================================================="
-echo "Por favor, aguarde 2min e realize um novo teste no ramal $1"
+echo "Por favor, aguarde 2min e realize um novo teste no ramal/dispositivo $1"
 echo "=================================================================="
 
