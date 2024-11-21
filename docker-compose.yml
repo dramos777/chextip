@@ -49,6 +49,9 @@ services:
       - /etc/timezone:/etc/timezone:ro
     networks:
       - chextip-network
+    depends_on:
+      - db
+    restart: "always"
 
   db:
     image: mariadb:latest
@@ -65,6 +68,7 @@ services:
       - /etc/timezone:/etc/timezone:ro
     networks:
       - chextip-network
+    restart: "always"
 
 volumes:
   db_data:
