@@ -54,6 +54,7 @@ TELNET_HOST="$CURRENTDEVICEIP"
 #Command to discovery all active ATAs IPs
 SSH_COMMAND="/ip dhcp-server lease print"
 CommandSSH | GrepIP > $F_LEASES
+ErrorSSH
 
 #Comparing leases IPs and last IPs changed and adding new IPs
 while read -r ip; do
@@ -78,6 +79,7 @@ done
 #Remove connections
 SSH_COMMAND="/ip firewall connection remove [find src-address~\""$CURRENTDEVICEIP"\"]"
 CommandSSH 2>&1 > /dev/null
+ErrorSSH
 
 #Changing variable SSH_COMMAND to change ATA IP Address
 SSH_COMMAND="/ip dhcp-server lease set address="$ATAIP" [find where comment~\""$PHONE_EXTENSION"\"]"
@@ -95,38 +97,41 @@ if [ ! -z "$MODEL" ]; then
 			    && ClearTMP ;;
 
 		ata200) Ata200 2>&1 >/dev/null \
-			    && [ "$?" = 0 ] && CommandSSH \
+			    && PythonError \
+			    && CommandSSH \
 			    && ErrorSSH \
 			    && ClearTMP ;;
 
-		gkm|gkm2210t) Gkm2210t 2>&1 > /dev/stdout \
-			    && [ "$?" = 0 ] && CommandSSH \
+		gkm|gkm2210t) Gkm2210t 2>&1 > /dev/null \
+			    && PythonError \
+			    && CommandSSH \
 			    && ErrorSSH \
 			    && ClearTMP ;;
 
-		khomp|16m4l) Khomp 2>&1 > /dev/null\
-			    && [ "$?" = 0 ] && CommandSSH \
+		khomp|16m4l) Khomp 2>&1 > /dev/null \
+			    && PythonError \
+			    && CommandSSH \
 			    && ErrorSSH \
 			    && ClearTMP ;;
 
-	       ss3530) Intelbras_ss3530 \
-			    && ErrorSSH \
+	       ss3530) Intelbras_ss3530 2>&1 > /dev/null \
+			    && PythonError \
 			    && ClearTMP ;;
 
-	       ss3532) Intelbras_ss3532 \
-			    && ErrorSSH \
+	       ss3532) Intelbras_ss3532 2>&1 > /dev/null \
+			    && PythonError \
 			    && ClearTMP ;;
 
-	           xpe3200) Intelbras_xpe3200 \
-			    && ErrorSSH \
+	           xpe3200) Intelbras_xpe3200 2>&1 > /dev/null \
+			    && PythonError \
 			    && ClearTMP ;;
 
-	           linear) LinearModule \
-			    && ErrorSSH \
+	           linear) LinearModule 2>&1 > /dev/null \
+			    && PythonError \
 			    && ClearTMP ;;
 
-	           nice) NiceModule \
-			    && ErrorSSH \
+	           nice) NiceModule 2>&1 > /dev/null \
+			    && PythonError \
 			    && ClearTMP ;;
 
 			 *) echo "O modelo $2 não é compativel com a API. Por favor, entre em contato com o Administrador!" && exit 0 ;;
