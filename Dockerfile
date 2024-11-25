@@ -1,27 +1,5 @@
 FROM python:3.10.15-slim-bookworm
 
-# DB VARIABLES
-ENV MYSQL_HOST="127.0.0.1" \
-    MYSQL_USER="admin" \
-    MYSQL_PASSWORD="admin" \
-    MYSQL_DATABASE="condominios_db" \
-    SSH_USER="admin" \
-    SSH_PORT="22" \
-    SSH_PASSWORD="admin" \
-    TELNET_PORT="23" \
-    TELNET_PASSWORD="admin" \
-    HTTP_USER="admin" \
-    HTTP_PASSWORD="admin" \
-    HTTP_XPE3200_PASS="admin" \
-    HTTP_SS3530_PASS="admin" \
-    HTTP_SS3532_PASS="admin" \
-    LINEAR_USER="admin" \
-    LINEAR_PASSWORD="admin" \
-    NICE_USER="admin" \
-    NICE_PASSWORD="admin" \
-    DIRLOG="/var/log" \
-    PREFIXIP="192.168."
-
 COPY ./app /app
 
 WORKDIR /app
