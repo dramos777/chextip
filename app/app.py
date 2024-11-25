@@ -98,6 +98,10 @@ def show_condominium(condo_id):
 @app.route('/register_branch', methods=['GET', 'POST'])
 @login_required
 def register_branch():
+    if not current_user.is_admin:
+        flash('Ação não permitida.')
+        return redirect(url_for('dashboard'))
+
     form = RegisterBranchForm()
     condominiums = Condominium.query.all()
     form.condominium_name.choices = [(condo.id, condo.name) for condo in condominiums]
@@ -284,6 +288,7 @@ def edit_condominium(condo_id):
     return render_template('edit_condominium.html', form=form, condominium=condominium)
 
 @app.route('/delete_condominium/<int:condo_id>', methods=['POST'])
+@login_required
 def delete_condominium(condo_id):
     if not current_user.is_admin:
         flash('Ação não permitida.')
@@ -304,6 +309,10 @@ def delete_condominium(condo_id):
 @app.route('/users')
 @login_required
 def users():
+    if not current_user.is_admin:
+        flash('Ação não permitida.')
+        return redirect(url_for('dashboard'))
+
     all_users = User.query.order_by(User.username.asc()).all()
     return render_template('users.html', users=all_users)
 
