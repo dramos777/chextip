@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-
+import sys
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -32,6 +32,7 @@ def intelbras_gkm2210t():
 
     except Exception as e:
         print(f"An exception occurred: {e}")
+        sys.exit(1)
 
     finally:
         if firefox:
@@ -91,6 +92,7 @@ def intelbras_ata200():
 
     except Exception as e:
         print(f"An exception occurred: {e}")
+        sys.exit(1)
 
     finally:
         if firefox:
@@ -128,6 +130,7 @@ def khomp():
 
     except Exception as e:
         print(f"An exception occurred: {e}")
+        sys.exit(1)
 
     finally:
         if firefox:
@@ -168,6 +171,7 @@ def intelbras_ss3530():
 
     except Exception as e:
         print(f"An exception occurred: {e}")
+        sys.exit(1)
 
     finally:
         if firefox:
@@ -214,6 +218,7 @@ def intelbras_ss3532():
 
     except Exception as e:
         print(f"An exception occurred: {e}")
+        sys.exit(1)
 
     finally:
         if firefox:
@@ -257,6 +262,7 @@ def intelbras_xpe3200():
 
     except Exception as e:
         print(f"An exception occurred: {e}")
+        sys.exit(1)
 
     finally:
         if firefox:
@@ -310,6 +316,7 @@ def linear_module():
 
     except Exception as e:
         print(f"An exception occurred: {e}")
+        sys.exit(1)
 
     finally:
         if firefox:
@@ -358,6 +365,7 @@ def nice_module():
         
     except Exception as e:
         print(f"An exception occurred: {e}")
+        sys.exit(1)
 
     finally:
         if firefox:
