@@ -45,3 +45,6 @@ F_ENVIROMENT="/app/scripts/var/environment"
 STARTDATE="$DATE"
 STARTTIME="$TIME"
 
+#PBXPASSWORD=admin
+#PBXUSER=admin
+#SIPURL=sip.example.com
