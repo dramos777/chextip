@@ -4,6 +4,7 @@ from flask import Flask, render_template, redirect, url_for, flash, request
 from logging.handlers import RotatingFileHandler
 from models import db, User, Condominium, Branch
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 import subprocess
 import logging
 import os
@@ -17,6 +18,7 @@ app.config['LOG_AUDIT_PATH'] = '/var/log/chextip/web_chextip_audit.log'
 
 # Initializing extensions
 db.init_app(app)
+migrate = Migrate(app, db)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
