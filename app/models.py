@@ -26,6 +26,7 @@ class Condominium(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     rb_host_ip = db.Column(db.String(45), nullable=False)
+    rb_pub_ip = db.Column(db.String(45))
     branches = db.relationship('Branch', backref='condominium', lazy=True)
 
     def __str__(self):
