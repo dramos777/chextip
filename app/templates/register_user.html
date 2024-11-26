@@ -1,4 +1,6 @@
+{% if current_user.is_admin %}
 {% extends 'base.html' %}
+
 
 {% block content %}
     <h2>Cadastrar Usuário</h2>
@@ -22,3 +24,4 @@
     </form>
 {% endblock %}
 
+{% endif %}

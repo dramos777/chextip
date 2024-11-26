@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% if current_user.is_admin %}
+
 {% block content %}
 <div class="container mt-4">
     <h2>Cadastrar Dispositivo</h2>
@@ -29,3 +31,4 @@
 </div>
 {% endblock %}
 
+{% endif %}
