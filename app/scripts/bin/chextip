@@ -89,41 +89,49 @@ if [ ! -z "$MODEL" ]; then
 	       	grandstream|ht813|ht814|ht815|ht503|gxw|gxw410x) Grandstream 2>&1 > /dev/null \
 			    && CommandSSH \
 			    && ErrorSSH \
+			    && UpdatePubIP \
 			    && ClearTMP ;;
 
 		linksys|spa3000|spa3102) Linksys 2>&1 > /dev/null \
 			    && CommandSSH \
 			    && ErrorSSH \
+			    && UpdatePubIP \
 			    && ClearTMP ;;
 
 		ata200) Ata200 2>&1 >/dev/null \
 			    && PythonError \
 			    && CommandSSH \
 			    && ErrorSSH \
+			    && UpdatePubIP \
 			    && ClearTMP ;;
 
 		gkm|gkm2210t) Gkm2210t 2>&1 > /dev/null \
 			    && PythonError \
 			    && CommandSSH \
 			    && ErrorSSH \
+			    && UpdatePubIP \
 			    && ClearTMP ;;
 
 		khomp|16m4l) Khomp 2>&1 > /dev/null \
 			    && PythonError \
 			    && CommandSSH \
 			    && ErrorSSH \
+			    && UpdatePubIP \
 			    && ClearTMP ;;
 
 	       ss3530) Intelbras_ss3530 2>&1 > /dev/null \
 			    && PythonError \
+			    && UpdatePubIP \
 			    && ClearTMP ;;
 
 	       ss3532) Intelbras_ss3532 2>&1 > /dev/null \
 			    && PythonError \
+			    && UpdatePubIP \
 			    && ClearTMP ;;
 
 	           xpe3200) Intelbras_xpe3200 2>&1 > /dev/null \
 			    && PythonError \
+			    && UpdatePubIP \
 			    && ClearTMP ;;
 
 	           linear) LinearModule 2>&1 > /dev/null \
