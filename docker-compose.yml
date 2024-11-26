@@ -20,8 +20,12 @@ services:
       - chextip-network
 
   chextip:
-    image: dramos777/chextip:2.3.2
+    image: dramos777/chextip:2.3.3
     environment:
+      #TO-ADD-VAR
+      SIPURL: "${SIPURL:?Please configure SIPURL in the .env file}"
+      PBXUSER: "${PBXUSER:?Please configure PBXUSER in the .env file}"
+      PBXPASSWORD: "${PBXPASSWORD:?Please configure PBXPASSWORD in the .env file}"
       MYSQL_DATABASE: "${MYSQL_DATABASE:?Please configure MYSQL_DATABASE in the .env file}"
       MYSQL_USER: "${MYSQL_USER:?Please configure MYSQL_USER in the .env file}"
       MYSQL_PASSWORD: "${MYSQL_PASSWORD:?Please configure MYSQL_PASSWORD in the .env file}"
