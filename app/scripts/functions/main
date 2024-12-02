@@ -20,7 +20,7 @@ UpdatePubIP () {
 		
 		COND_DESCRIPTION=$(mysql -h "$MYSQL_HOST" -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -se "SELECT c.name FROM condominium c JOIN branch b ON c.id = b.condominium_id WHERE b.branch_number = "\'$BRANCH_NUMBER\'";" -N)
 
-		# Update rb_pub_ip
+		# Update rb_pub_ip in SQL Server
 		mysql -h "$MYSQL_HOST" -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -se "UPDATE condominium c JOIN branch b ON c.id = b.condominium_id SET c.rb_pub_ip = "\'$RB_PUB_IP\'" WHERE b.branch_number = "\'$BRANCH_NUMBER\'";"
 
 		RANDOM_F="$RANDOM"
@@ -30,7 +30,7 @@ UpdatePubIP () {
 			-e "s/PBXUSER/$PBXUSER/g" \
 			-e "s/PBXPASSWORD/$PBXPASSWORD/g" \
 			-e "s/COND_DESCRIPTION/$COND_DESCRIPTION/g" > "$DIRTMP/${RANDOM_F}_pbx.py" \
-			&& python "$DIRTMP/${RANDOM_F}_pbx.py"
+			&& python "$DIRTMP/${RANDOM_F}_pbx.py" &
 
 	fi
 
