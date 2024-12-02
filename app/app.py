@@ -126,7 +126,7 @@ def register_branch():
         logging.info(f'Branch {form.branch_number.data} added')
         flash('Ramal cadastrado com sucesso.')
         return redirect(url_for('dashboard'))
-    return render_template('cadastro_ramal.html', form=form)
+    return render_template('add_branch.html', form=form)
 
 @app.route('/restart_branch/<int:branch_id>')
 @login_required
