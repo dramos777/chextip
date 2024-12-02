@@ -27,6 +27,7 @@ class EditBranchForm(FlaskForm):
     branch_number = StringField('Identificador / Número', validators=[DataRequired()])
     model = StringField('Modelo', validators=[DataRequired()])
     manufacturer = StringField('Fabricante', validators=[DataRequired()])
+    condominium_name = SelectField('Condomínio', choices=[], coerce=int, validators=[DataRequired()])
     submit = SubmitField('Salvar Alterações')
 
 class EditUserForm(FlaskForm):

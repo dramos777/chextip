@@ -196,11 +196,16 @@ def edit_branch(branch_id):
 
     branch = Branch.query.get_or_404(branch_id)
     form = EditBranchForm(obj=branch)
+    
+    condominiums = Condominium.query.all()
+    form.condominium_name.choices = [(condo.id, condo.name) for condo in condominiums]
+
     if form.validate_on_submit():
         branch.location = form.location.data
         branch.branch_number = form.branch_number.data
         branch.model = form.model.data
         branch.manufacturer = form.manufacturer.data
+        branch.condominium_id = form.condominium_name.data
         db.session.commit()
         logging.info(f'Branch {branch.branch_number} edited by {current_user.username}')
         flash(f'Ramal {branch.branch_number} editado com sucesso.')
