@@ -86,52 +86,52 @@ SSH_COMMAND="/ip dhcp-server lease set address="$ATAIP" [find where comment~\""$
 #Rebooting ATA
 if [ ! -z "$MODEL" ]; then
 	case "$MODEL" in
-	       	grandstream|ht813|ht814|ht815|ht503|gxw|gxw410x) Grandstream 2>&1 > /dev/null \
+	       	grandstream|ht813|ht814|ht815|ht503|gxw|gxw410x) UpdatePubIP \ 
+			    && Grandstream 2>&1 > /dev/null \
 			    && CommandSSH \
 			    && ErrorSSH \
-			    && UpdatePubIP \
 			    && ClearTMP ;;
 
-		linksys|spa3000|spa3102) Linksys 2>&1 > /dev/null \
+		linksys|spa3000|spa3102) UpdatePubIP \
+			    && Linksys 2>&1 > /dev/null \
 			    && CommandSSH \
 			    && ErrorSSH \
-			    && UpdatePubIP \
 			    && ClearTMP ;;
 
-		ata200) Ata200 2>&1 >/dev/null \
-			    && PythonError \
-			    && CommandSSH \
-			    && ErrorSSH \
-			    && UpdatePubIP \
-			    && ClearTMP ;;
-
-		gkm|gkm2210t) Gkm2210t 2>&1 > /dev/null \
+		ata200) UpdatePubIP \
+			    && Ata200 2>&1 >/dev/null \
 			    && PythonError \
 			    && CommandSSH \
 			    && ErrorSSH \
-			    && UpdatePubIP \
 			    && ClearTMP ;;
 
-		khomp|16m4l) Khomp 2>&1 > /dev/null \
+		gkm|gkm2210t) UpdatePubIP \
+			    && Gkm2210t 2>&1 > /dev/null \
 			    && PythonError \
 			    && CommandSSH \
 			    && ErrorSSH \
-			    && UpdatePubIP \
 			    && ClearTMP ;;
 
-	       ss3530) Intelbras_ss3530 2>&1 > /dev/null \
+		khomp|16m4l) UpdatePubIP \
+			    && Khomp 2>&1 > /dev/null \
 			    && PythonError \
-			    && UpdatePubIP \
+			    && CommandSSH \
+			    && ErrorSSH \
 			    && ClearTMP ;;
 
-	       ss3532) Intelbras_ss3532 2>&1 > /dev/null \
+	       ss3530) UpdatePubIP \
+		            && Intelbras_ss3530 2>&1 > /dev/null \
 			    && PythonError \
-			    && UpdatePubIP \
 			    && ClearTMP ;;
 
-	           xpe3200) Intelbras_xpe3200 2>&1 > /dev/null \
+	       ss3532) UpdatePubIP \
+		            && Intelbras_ss3532 2>&1 > /dev/null \
 			    && PythonError \
-			    && UpdatePubIP \
+			    && ClearTMP ;;
+
+	           xpe3200) UpdatePubIP \
+			    && Intelbras_xpe3200 2>&1 > /dev/null \
+			    && PythonError \
 			    && ClearTMP ;;
 
 	           linear) LinearModule 2>&1 > /dev/null \
