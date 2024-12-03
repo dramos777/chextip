@@ -28,7 +28,7 @@ UpdatePubIP () {
 			-e "s/PBXUSER/$PBXUSER/g" \
 			-e "s/PBXPASSWORD/$PBXPASSWORD/g" \
 			-e "s/COND_DESCRIPTION/$COND_DESCRIPTION/g" > "$DIRTMP/${RANDOM_F}_pbx.py" \
-			&& hohup python "$DIRTMP/${RANDOM_F}_pbx.py" > /dev/null 2>&1 &
+			&& python "$DIRTMP/${RANDOM_F}_pbx.py" > /dev/null 2>&1 &
 
 	fi
 
