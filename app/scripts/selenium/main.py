@@ -241,7 +241,7 @@ def intelbras_ss1530():
         username.send_keys("HTTP_USER")
 
         password = firefox.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[1]/div[3]/form/div[2]/div/div/input')
-        password.send_keys("HTTP_SS3532_PASS")
+        password.send_keys("HTTP_SS1530_PASS")
         password.send_keys(Keys.RETURN)
 
         time.sleep(7)
