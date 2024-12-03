@@ -42,15 +42,6 @@ ErrorSSH () {
 		exit 1
 	fi
 }
-#
-# Script python was running successfully?
-PythonError(){
-	if [ "$?" != 0 ]; then
-		echo "Reinicialização falhou. Por favor, entre em contato com o TI de plantão e reporte o erro."
-		echo ""
-		echo "Python Script Error $DATE $TIME" && exit 1
-	fi
-}
 
 # Filter for IP Address
 GrepIP () {
@@ -65,4 +56,10 @@ ChangeAtaIP (){
 	&& ErrorSSH
     fi
 
+}
+
+ClearTMP () {
+	[ ! -z "$(ls -A $DIRTMP/)" ] && rm -rf "$DIRTMP/${RANDOM_F}_main.py" \
+	&& rm -rf "$DIRTMP/${RANDOM_F}_pbx.py" \
+	&& rm -rf "$DIRTMP/"*ERROR
 }
