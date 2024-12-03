@@ -1,7 +1,6 @@
 # Functions
 # Get ATA current IP
 CommandSSH () {
-	RANDOM_F="$RANDOM"
 	sshpass -p "$SSH_PASSWORD" ssh -p $SSH_PORT -o StrictHostKeyChecking=no "$SSH_USER"@"$SSH_HOST" "$SSH_COMMAND" 2> "$DIRTMP/${RANDOM_F}_ERROR"
 
 }
@@ -23,14 +22,13 @@ UpdatePubIP () {
 		# Update rb_pub_ip in SQL Server
 		mysql -h "$MYSQL_HOST" -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -se "UPDATE condominium c JOIN branch b ON c.id = b.condominium_id SET c.rb_pub_ip = "\'$RB_PUB_IP\'" WHERE b.branch_number = "\'$BRANCH_NUMBER\'";"
 
-		RANDOM_F="$RANDOM"
 		cat "$SELENIUM/pbx.py" | \
 			sed -e "s/RB_PUB_IP/$RB_PUB_IP/g" \
 			-e "s/SIPURL/$SIPURL/g" \
 			-e "s/PBXUSER/$PBXUSER/g" \
 			-e "s/PBXPASSWORD/$PBXPASSWORD/g" \
 			-e "s/COND_DESCRIPTION/$COND_DESCRIPTION/g" > "$DIRTMP/${RANDOM_F}_pbx.py" \
-			&& python "$DIRTMP/${RANDOM_F}_pbx.py" &
+			&& hohup python "$DIRTMP/${RANDOM_F}_pbx.py" > /dev/null 2>&1 &
 
 	fi
 
@@ -59,7 +57,12 @@ GrepIP () {
 	grep -E -o '([0-9]{1,3}\.){3}[0-9]{1,3}'
 }
 
-ClearTMP () {
-	rm -rf $DIRTMP/${RANDON_F}_main.py
-}
+#Changing variable SSH_COMMAND to change ATA IP Address
+ChangeAtaIP (){
+    if [ "$?" = 0 ]; then
+	SSH_COMMAND="/ip dhcp-server lease set address="$ATAIP" [find where comment~\""$PHONE_EXTENSION"\"]"
+	CommandSSH \
+	&& ErrorSSH
+    fi
 
+}

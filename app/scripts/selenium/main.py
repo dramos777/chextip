@@ -224,6 +224,53 @@ def intelbras_ss3532():
         if firefox:
             firefox.quit()
 
+#Intelbras SS1530 is a face device
+def intelbras_ss1530():
+    firefox = None
+    try:
+        option = Options()
+        option.add_argument('--headless')
+        firefox = webdriver.Firefox(options=option)
+        firefox.get("http://CURRENTDEVICEIP")
+
+        WebDriverWait(firefox, 10).until(
+            EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[1]/div[3]/form/div[1]/div/div/input'))
+        )
+
+        username = firefox.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[1]/div[3]/form/div[1]/div/div/input')
+        username.send_keys("HTTP_USER")
+
+        password = firefox.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[1]/div[3]/form/div[2]/div/div/input')
+        password.send_keys("HTTP_SS3532_PASS")
+        password.send_keys(Keys.RETURN)
+
+        time.sleep(7)
+
+        WebDriverWait(firefox, 15).until(
+            EC.visibility_of_element_located((By.XPATH, '/html/body/div/div[2]/div[2]/div[1]/div/div/ul/li[15]'))
+        )
+
+        time.sleep(7)
+
+        maintenance = firefox.find_element(By.XPATH, '/html/body/div/div[2]/div[2]/div[1]/div/div/ul/li[12]')
+        maintenance.click()
+
+        reboot_button = firefox.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[2]/div[2]/div/div/div/div[2]/div/div[2]/button/span')
+        reboot_button.click()
+
+        time.sleep(5)
+
+        alert = firefox.switch_to.active_element
+        alert.send_keys(Keys.RETURN)
+
+    except Exception as e:
+        print(f"An exception occurred: {e}")
+        sys.exit(1)
+
+    finally:
+        if firefox:
+            firefox.quit()
+
 #Intelbras XPE-3200-IP-FACE
 def intelbras_xpe3200():
     firefox = None

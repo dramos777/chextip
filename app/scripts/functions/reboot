@@ -1,6 +1,5 @@
 # Reboot functions
 Gkm2210t () {
-	RANDOM_F="$RANDOM"
 	cat "$SELENIUM/main.py" | \
 			  sed -e "s/CURRENTDEVICEIP/$CURRENTDEVICEIP/g" \
 			      -e "s/HTTP_USER/$HTTP_USER/g" \
@@ -10,7 +9,6 @@ Gkm2210t () {
 }
 
 Ata200 () {
-	RANDOM_F="$RANDOM"
 	cat "$SELENIUM/main.py" | \
 			  sed -e "s/CURRENTDEVICEIP/$CURRENTDEVICEIP/g" \
 			      -e "s/HTTP_USER/$HTTP_USER/g" \
@@ -20,7 +18,6 @@ Ata200 () {
 }
 
 Khomp () {
-	RANDOM_F="$RANDOM"
 	cat "$SELENIUM/main.py" | \
 			  sed -e "s/CURRENTDEVICEIP/$CURRENTDEVICEIP:8085/g" \
 			      -e "s/HTTP_PASSWORD/$HTTP_PASSWORD/g" \
@@ -29,7 +26,6 @@ Khomp () {
 }
 
 Intelbras_xpe3200 () {
-	RANDOM_F="$RANDOM"
 	cat "$SELENIUM/main.py" | \
 			  sed -e "s/CURRENTDEVICEIP/$CURRENTDEVICEIP/g" \
 			      -e "s/HTTP_USER/$HTTP_USER/g" \
@@ -39,7 +35,6 @@ Intelbras_xpe3200 () {
 }
 
 Intelbras_ss3530 () {
-	RANDOM_F="$RANDOM"
 	cat "$SELENIUM/main.py" | \
 			  sed -e "s/CURRENTDEVICEIP/$CURRENTDEVICEIP/g" \
 			      -e "s/HTTP_USER/$HTTP_USER/g" \
@@ -49,12 +44,20 @@ Intelbras_ss3530 () {
 }
 
 Intelbras_ss3532 () {
-	RANDOM_F="$RANDOM"
 	cat "$SELENIUM/main.py" | \
 			  sed -e "s/CURRENTDEVICEIP/$CURRENTDEVICEIP/g" \
 			      -e "s/HTTP_USER/$HTTP_USER/g" \
 			      -e "s/HTTP_SS3532_PASS/$HTTP_SS3532_PASS/g" \
 			      -e "s/PYTHON_COMMAND/intelbras_ss3532/g" > "$DIRTMP/${RANDOM_F}_main.py" \
+		       && python "$DIRTMP/${RANDOM_F}_main.py"
+}
+
+Intelbras_ss1530 () {
+	cat "$SELENIUM/main.py" | \
+			  sed -e "s/CURRENTDEVICEIP/$CURRENTDEVICEIP/g" \
+			      -e "s/HTTP_USER/$HTTP_USER/g" \
+			      -e "s/HTTP_SS1530_PASS/$HTTP_SS1530_PASS/g" \
+			      -e "s/PYTHON_COMMAND/intelbras_ss1530/g" > "$DIRTMP/${RANDOM_F}_main.py" \
 		       && python "$DIRTMP/${RANDOM_F}_main.py"
 }
 
@@ -89,7 +92,6 @@ Linksys () {
 }
 
 LinearModule () {
-	RANDOM_F="$RANDOM"
 	cat "$SELENIUM/main.py" | \
 			  sed -e "s/CURRENTDEVICEIP/$CURRENTDEVICEIP/g" \
 			      -e "s/LINEAR_USER/$LINEAR_USER/g" \
@@ -99,7 +101,6 @@ LinearModule () {
 }
 
 NiceModule () {
-	RANDOM_F="$RANDOM"
 	cat "$SELENIUM/main.py" | \
 			  sed -e "s/CURRENTDEVICEIP/$CURRENTDEVICEIP/g" \
 			      -e "s/NICE_USER/$NICE_USER/g" \
@@ -107,5 +108,3 @@ NiceModule () {
 			      -e "s/PYTHON_COMMAND/nice_module/g" > "$DIRTMP/${RANDOM_F}_main.py" \
 		       && python "$DIRTMP/${RANDOM_F}_main.py"
 }
-
-
