@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+# Checks if exactly 2 arguments were passed
+if [ "$#" -ne 2 ]; then
+    echo "Erro: Você deve passar exatamente dois argumentos."
+    exit 1
+fi
+
+# Check if $1 and $2 is not null
+if [ -z "$1" ] || [ -z "$2" ]; then
+    echo "Opção inválida. Ramal/Identificador ou Modelo do dispositivo não fornecido corretamente."
+    exit 1
+fi
+
+RANDOM_F="$RANDOM"
+
 source "/app/scripts/var/environment"
 
 echo "================================================================================"
@@ -81,76 +95,64 @@ SSH_COMMAND="/ip firewall connection remove [find src-address~\""$CURRENTDEVICEI
 CommandSSH 2>&1 > /dev/null
 ErrorSSH
 
-#Changing variable SSH_COMMAND to change ATA IP Address
-SSH_COMMAND="/ip dhcp-server lease set address="$ATAIP" [find where comment~\""$PHONE_EXTENSION"\"]"
 #Rebooting ATA
 if [ ! -z "$MODEL" ]; then
     case "$MODEL" in
         grandstream|ht813|ht814|ht815|ht503|gxw|gxw410x) UpdatePubIP \
-	    && Grandstream > /dev/null 2>&1 \
-	    && CommandSSH \
-	    && ErrorSSH \
-	    && ClearTMP
+	    && Grandstream 2>&1 \
+	    && ChangeAtaIP
             ;;
 
 	linksys|spa3000|spa3102) UpdatePubIP \
-	    && Linksys > /dev/null 2>&1 \
-	    && CommandSSH \
-	    && ErrorSSH \
-	    && ClearTMP
+	    && Linksys 2>&1 \
+	    && ChangeAtaIP
             ;;
 
         ata200) UpdatePubIP \
-	    && Ata200 >/dev/null 2>&1 \
+	    && Ata200 2>&1 \
             && PythonError \
-	    && CommandSSH \
-	    && ErrorSSH \
-	    && ClearTMP
+	    && ChangeAtaIP
 	    ;;
 
 	gkm|gkm2210t) UpdatePubIP \
-            && Gkm2210t > /dev/null 2>&1 \
+            && Gkm2210t 2>&1 \
             && PythonError \
-	    && CommandSSH \
-	    && ErrorSSH \
-	    && ClearTMP
+	    && ChangeAtaIP
 	    ;;
 
 	khomp|16m4l) UpdatePubIP \
-	    && Khomp > /dev/null 2>&1 \
+	    && Khomp 2>&1 \
 	    && PythonError \
-	    && CommandSSH \
-	    && ErrorSSH \
-	    && ClearTMP
+	    && ChangeAtaIP
 	    ;;
 
 	ss3530) UpdatePubIP \
-	    && Intelbras_ss3530 > /dev/null 2>&1 \
-	    && PythonError \
-	    && ClearTMP
+	    && Intelbras_ss3530 2>&1 \
+	    && PythonError
 	    ;;
 
 	ss3532) UpdatePubIP \
-	    && Intelbras_ss3532 > /dev/null 2>&1 \
-	    && PythonError \
-	    && ClearTMP
+	    && Intelbras_ss3532 2>&1 \
+	    && PythonError
+ 	    ;;
+
+	ss1530) UpdatePubIP \
+	    && Intelbras_ss1530 2>&1 \
+	    && PythonError
  	    ;;
 
 	xpe3200) UpdatePubIP \
-	    && Intelbras_xpe3200 > /dev/null 2>&1 \
-	    && PythonError \
-	    && ClearTMP
+	    && Intelbras_xpe3200 2>&1 \
+	    && PythonError
 	    ;;
 
 	linear)
-	    LinearModule > /dev/null 2>&1 \
-	    && PythonError \
-	    && ClearTMP
+	    LinearModule 2>&1 \
+	    && PythonError
 	    ;;
 
-	nice) NiceModule > /dev/null 2>&1 \
-	    && PythonError \
-	    && ClearTMP
+	nice) NiceModule 2>&1 \
+	    && PythonError
 	    ;;
 
             *) echo "O modelo $2 não é compativel com a API. Por favor, entre em contato com o Administrador!" && exit 0
@@ -160,7 +162,9 @@ if [ ! -z "$MODEL" ]; then
 
 fi
 
-[ ! -z "$(ls -A $DIRTMP/)" ] && rm -rf $DIRTMP/*
+[ ! -z "$(ls -A $DIRTMP/)" ] && rm -rf "$DIRTMP/${RANDOM_F}_main.py" \
+	&& rm -rf "$DIRTMP/${RANDOM_F}_pbx.py" \
+	&& rm -rf "$DIRTMP/*ERROR"
 
 TIME="$(date "+%H:%M:%S")"
 
