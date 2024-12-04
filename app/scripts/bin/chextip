@@ -135,6 +135,10 @@ if [ ! -z "$MODEL" ]; then
 	    && Intelbras_ss1530 2>&1
  	    ;;
 
+	ss3540) UpdatePubIP \
+	    && Intelbras_ss3540 2>&1
+ 	    ;;
+
 	xpe3200) UpdatePubIP \
 	    && Intelbras_xpe3200 2>&1
 	    ;;
