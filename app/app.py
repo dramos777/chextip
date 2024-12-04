@@ -199,6 +199,10 @@ def edit_branch(branch_id):
     
     condominiums = Condominium.query.all()
     form.condominium_name.choices = [(condo.id, condo.name) for condo in condominiums]
+    
+    # Selecionar automaticamente o condominio corrente da branch
+    if not form.condominium_name.data:
+        form.condominium_name.data = branch.condominium_id
 
     if form.validate_on_submit():
         branch.location = form.location.data
