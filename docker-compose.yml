@@ -41,6 +41,7 @@ services:
       HTTP_SS3530_PASS: "${HTTP_SS3530_PASS:?Please configure HTTP_SS3530_PASS in the .env file}"
       HTTP_SS3532_PASS: "${HTTP_SS3532_PASS:?Please configure HTTP_SS3532_PASS in the .env file}"
       HTTP_SS1530_PASS: "${HTTP_SS1530_PASS:?Please configure HTTP_SS1530_PASS in the .env file}"
+      HTTP_SS3540_PASS: "${HTTP_SS3540_PASS:?Please configure HTTP_SS3540_PASS in the .env file}"
       LINEAR_USER: "${LINEAR_USER:?Please configure LINEAR_USER in the .env file}"
       LINEAR_PASSWORD: "${LINEAR_PASSWORD:?Please configure LINEAR_PASSWORD in the .env file}"
       NICE_USER: "${NICE_USER:?Please configure NICE_USER in the .env file}"
