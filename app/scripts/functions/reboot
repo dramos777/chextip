@@ -21,7 +21,7 @@ Ata200 () {
 
 Khomp () {
     cat "$SELENIUM/main.py" | \
-        sed -e "s/CURRENTDEVICEIP/$CURRENTDEVICEIP:8085/g" \
+        sed -e "s/CURRENTDEVICEIP/$CURRENTDEVICEIP/g" \
 	-e "s/HTTP_PASSWORD/$HTTP_PASSWORD/g" \
 	-e "s/PYTHON_COMMAND/khomp/g" > "$DIRTMP/${RANDOM_F}_main.py" \
 	&& python "$DIRTMP/${RANDOM_F}_main.py"
