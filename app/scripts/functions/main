@@ -1,7 +1,7 @@
 # Functions
 # Get ATA current IP
 CommandSSH () {
-	sshpass -p "$SSH_PASSWORD" ssh -p $SSH_PORT -o StrictHostKeyChecking=no "$SSH_USER"@"$SSH_HOST" "$SSH_COMMAND" 2> "$DIRTMP/${RANDOM_F}_ERROR"
+	sshpass -p "$SSH_PASSWORD" ssh -p $SSH_PORT -o StrictHostKeyChecking=no "$SSH_USER"@"$SSH_HOST" "$SSH_COMMAND" > /dev/null"
 
 }
 
