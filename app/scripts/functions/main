@@ -72,7 +72,7 @@ Remove_pbx_tmp () {
 
 ClearTMP () {
     if [ ! -z "$(ls -A $DIRTMP/)" ]; then
-        rm -rf "$DIRTMP/${RANDOM_F}_main.py" 2>&1 > /dev/null
+        rm -rf $DIRTMP/${RANDOM_F}_main.py 2>&1 > /dev/null
 	Remove_pbx_tmp &
 	rm -rf "$DIRTMP/"*ERROR 2>&1 > /dev/null
 }
