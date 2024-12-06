@@ -61,7 +61,10 @@ ChangeAtaIP (){
 # Remove tmp file genereted by pbx python command
 Remove_tmp_files () {
     while true; do
-        if ps aux | grep -i chextip | grep -iv grep > /dev/null; then
+	MAIN_=$(ps aux | grep -i 'main.py' | grep -iv grep | grep -o main.py)
+	PBX_=$(ps aux | grep -i 'pbx.py' | grep -iv grep | grep -o pbx.py)
+
+        if "$MAIN_" = 'main.py' || "$PBX_" = 'pbx.py'; then
             sleep 5
         else
 	    rm -rf "${DIRTMP}"/* > /dev/null
