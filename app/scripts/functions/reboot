@@ -86,10 +86,9 @@ Grandstream () {
 	echo "$REBOOT_COMMAND"
 	sleep 1
 	echo "exit"
-    ) | telnet "$TELNET_HOST" "$TELNET_PORT" 2>&1 >> "${DIRTMP}/${RANDOM_F}"_grandstream
+    ) | telnet "$TELNET_HOST" "$TELNET_PORT" >> "${DIRTMP}/${RANDOM_F}"_grandstream 2>&1 > /dev/null
 
     TMP=$(echo "${DIRTMP}/${RANDOM_F}"_grandstream) 2>/dev/null
-    cat "${DIRTMP}/${RANDOM_F}"_grandstream
 
     GREP="$(grep -o refused $TMP 2>/dev/null)"
     [ "$GREP" = refused ] \
