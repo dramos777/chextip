@@ -71,7 +71,7 @@ Remove_tmp_files () {
 }
 
 ClearTMP () {
-    if [ -z "$(ls -A $DIRTMP/)" ]; then
+    if [ ! -z "$(ls -A $DIRTMP/)" ]; then
 	Remove_tmp_files &
     fi
 }
