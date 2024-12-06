@@ -61,7 +61,7 @@ ChangeAtaIP (){
 # Remove tmp file genereted by pbx python command
 Remove_pbx_tmp () {
     while true; do
-        if ps -p $PYTHON_PBX_PID > /dev/null; then
+        if ps -p "$PBX_PID" > /dev/null; then
             sleep 5
         else
 	    rm -rf "$DIRTMP/${RANDOM_F}_pbx.py" 2>&1 > /dev/null

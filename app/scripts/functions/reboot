@@ -6,7 +6,7 @@ Gkm2210t () {
 	-e "s/HTTP_PASSWORD/$HTTP_PASSWORD/g" \
 	-e "s/PYTHON_COMMAND/intelbras_gkm2210t/g" > "$DIRTMP/${RANDOM_F}_main.py" \
 	&& python "$DIRTMP/${RANDOM_F}_main.py"
-    PYTHON_PBX_PID="$!"
+    PBX_PID="$!"
 }
 
 Ata200 () {
@@ -16,7 +16,7 @@ Ata200 () {
         -e "s/HTTP_PASSWORD/$HTTP_PASSWORD/g" \
         -e "s/PYTHON_COMMAND/intelbras_ata200/g" > "$DIRTMP/${RANDOM_F}_main.py" \
         && python "$DIRTMP/${RANDOM_F}_main.py"
-    PYTHON_PBX_PID="$!"
+    PBX_PID="$!"
 }
 
 Khomp () {
@@ -25,7 +25,7 @@ Khomp () {
 	-e "s/HTTP_PASSWORD/$HTTP_PASSWORD/g" \
 	-e "s/PYTHON_COMMAND/khomp/g" > "$DIRTMP/${RANDOM_F}_main.py" \
 	&& python "$DIRTMP/${RANDOM_F}_main.py"
-    PYTHON_PBX_PID="$!"
+    PBX_PID="$!"
 }
 
 Intelbras_xpe3200 () {
@@ -35,7 +35,7 @@ Intelbras_xpe3200 () {
 	-e "s/HTTP_XPE3200_PASS/$HTTP_XPE3200_PASS/g" \
 	-e "s/PYTHON_COMMAND/intelbras_xpe3200/g" > "$DIRTMP/${RANDOM_F}_main.py" \
 	&& python "$DIRTMP/${RANDOM_F}_main.py"
-    PYTHON_PBX_PID="$!"
+    PBX_PID="$!"
 }
 
 Intelbras_ss3530 () {
@@ -45,7 +45,7 @@ Intelbras_ss3530 () {
 	-e "s/HTTP_SS3530_PASS/$HTTP_SS3530_PASS/g" \
 	-e "s/PYTHON_COMMAND/intelbras_ss3530/g" > "$DIRTMP/${RANDOM_F}_main.py" \
 	&& python "$DIRTMP/${RANDOM_F}_main.py"
-    PYTHON_PBX_PID="$!"
+    PBX_PID="$!"
 }
 
 Intelbras_ss3532 () {
@@ -55,7 +55,7 @@ Intelbras_ss3532 () {
 	-e "s/HTTP_SS3532_PASS/$HTTP_SS3532_PASS/g" \
 	-e "s/PYTHON_COMMAND/intelbras_ss3532/g" > "$DIRTMP/${RANDOM_F}_main.py" \
 	&& python "$DIRTMP/${RANDOM_F}_main.py"
-    PYTHON_PBX_PID="$!"
+    PBX_PID="$!"
 }
 
 Intelbras_ss3540 () {
@@ -65,7 +65,7 @@ Intelbras_ss3540 () {
 	-e "s/HTTP_SS3540_PASS/$HTTP_SS3540_PASS/g" \
 	-e "s/PYTHON_COMMAND/intelbras_ss3540/g" > "$DIRTMP/${RANDOM_F}_main.py" \
 	&& python "$DIRTMP/${RANDOM_F}_main.py"
-    PYTHON_PBX_PID="$!"
+    PBX_PID="$!"
 }
 
 Intelbras_ss1530 () {
@@ -75,7 +75,7 @@ Intelbras_ss1530 () {
 	-e "s/HTTP_SS1530_PASS/$HTTP_SS1530_PASS/g" \
 	-e "s/PYTHON_COMMAND/intelbras_ss1530/g" > "$DIRTMP/${RANDOM_F}_main.py" \
 	&& python "$DIRTMP/${RANDOM_F}_main.py"
-    PYTHON_PBX_PID="$!"
+    PBX_PID="$!"
 }
 
 Grandstream () {
@@ -102,10 +102,12 @@ Grandstream () {
 	    && rm -rf $DIRTMP/* && exit 1
 
 	[ "$GREP" != denied ] && CommandSSH
+    PBX_PID="$!"
 }
 
 Linksys () {
     curl "http://$CURRENTDEVICEIP/admin/reboot"
+    PBX_PID="$!"
 }
 
 LinearModule () {
@@ -115,6 +117,7 @@ LinearModule () {
 	-e "s/LINEAR_PASSWORD/$LINEAR_PASSWORD/g" \
 	-e "s/PYTHON_COMMAND/linear_module/g" > "$DIRTMP/${RANDOM_F}_main.py" \
 	&& python "$DIRTMP/${RANDOM_F}_main.py"
+    PBX_PID="$!"
 }
 
 NiceModule () {
@@ -124,4 +127,5 @@ NiceModule () {
 	-e "s/NICE_PASSWORD/$NICE_PASSWORD/g" \
 	-e "s/PYTHON_COMMAND/nice_module/g" > "$DIRTMP/${RANDOM_F}_main.py" \
 	&& python "$DIRTMP/${RANDOM_F}_main.py"
+    PBX_PID="$!"
 }
