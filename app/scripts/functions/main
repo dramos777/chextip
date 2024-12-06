@@ -59,20 +59,19 @@ ChangeAtaIP (){
 }
 
 # Remove tmp file genereted by pbx python command
-Remove_pbx_tmp () {
+Remove_tmp_files () {
     while true; do
-        if ps -p "$PBX_PID" > /dev/null; then
+        if ps aux | grep -i chextip | grep -iv grep > /dev/null; then
             sleep 5
         else
-	    rm -rf "$DIRTMP/${RANDOM_F}_pbx.py" 2>&1 > /dev/null
+	    rm -rf "${DIRTMP}"/* > /dev/null
             break
         fi
     done
 }
 
 ClearTMP () {
-    if [ ! -z "$(ls -A $DIRTMP/)" ]; then
-        rm -rf $DIRTMP/${RANDOM_F}_main.py 2>&1 > /dev/null
-	Remove_pbx_tmp &
-	rm -rf "$DIRTMP/"*ERROR 2>&1 > /dev/null
+    if [ -z "$(ls -A $DIRTMP/)" ]; then
+	Remove_tmp_files &
+    fi
 }

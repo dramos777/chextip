@@ -86,20 +86,20 @@ Grandstream () {
 	echo "$REBOOT_COMMAND"
 	sleep 1
 	echo "exit"
-    ) | telnet "$TELNET_HOST" "$TELNET_PORT" 2>&1 >> "$DIRTMP/grandstream"
+    ) | telnet "$TELNET_HOST" "$TELNET_PORT" 2>&1 >> "${DIRTMP}/${RANDOM_F}"_grandstream
 
-    TMP=$(echo "$DIRTMP/grandstream") 2>/dev/null
-    cat "$DIRTMP/grandstream"
+    TMP=$(echo "${DIRTMP}/${RANDOM_F}"_grandstream) 2>/dev/null
+    cat "${DIRTMP}/${RANDOM_F}"_grandstream
 
     GREP="$(grep -o refused $TMP 2>/dev/null)"
     [ "$GREP" = refused ] \
         && echo "$TIME $TELNET_HOST Connextion refused!" >> "$DIRLOG/$DATE" \
-	&& rm -rf $DIRTMP/* && exit 1
+	&& exit 1
 
         GREP="$(grep -o denied $TMP 2>/dev/null)"
 	[ "$GREP" = denied ] \
 	    && echo "$TIME $TELNET_HOST Permission denied!" >> "$DIRLOG/$DATE" \
-	    && rm -rf $DIRTMP/* && exit 1
+	    && exit 1
 
 	[ "$GREP" != denied ] && CommandSSH
     PBX_PID="$!"
