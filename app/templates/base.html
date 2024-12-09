@@ -40,17 +40,20 @@
                     </li>
 
                     <!-- Menu de configurações -->
-                    <li class="nav-item dropdown">
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            ⚙️ 
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{{ url_for('register_condominium') }}">Cadastrar Condomínio</a>
-                            <a class="dropdown-item" href="{{ url_for('register_user') }}">Cadastrar Usuário</a>
-                            <a class="dropdown-item" href="{{ url_for('register_branch') }}">Cadastrar Dispositivo</a>
-                            <a class="dropdown-item" href="{{ url_for('users') }}">Exibir Usuários</a>
-                        </div>
-                    </li>
+                    {% if current_user.is_admin %}
+                        <li class="nav-item dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                ⚙️ 
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="{{ url_for('register_condominium') }}">Cadastrar Condomínio</a>
+                                <a class="dropdown-item" href="{{ url_for('register_user') }}">Cadastrar Usuário</a>
+                                <a class="dropdown-item" href="{{ url_for('register_branch') }}">Cadastrar Dispositivo</a>
+                                <a class="dropdown-item" href="{{ url_for('users') }}">Exibir Usuários</a>
+                            </div>
+                        </li>
+                    {% endif %}
+
 
                 {% else %}
                     <!-- Link de login para usuários não autenticados -->
