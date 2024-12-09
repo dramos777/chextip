@@ -20,7 +20,7 @@ services:
       - chextip-network
 
   chextip:
-    image: dramos777/chextip:2.4
+    image: dramos777/chextip:2.5
     environment:
       #TO-ADD-VAR
       SIPURL: "${SIPURL:?Please configure SIPURL in the .env file}"
