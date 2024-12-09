@@ -6,6 +6,10 @@
     <div class="container mt-5">
         <div class="card" style="width: 500px; height: overflow-y: auto;">
         <h3 class="text-center">CONDOMINIOS</h3>
+	<form class="form-inline" method="GET" action="{{ url_for('dashboard') }}">
+            <input type="text" name="search" class="form-control mr-2" placeholder="Buscar condomínio" value="{{ request.args.get('search', '') }}">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
 	</div>
         <div class="card" style="width: 500px; height: 350px; overflow-y: auto;">
         <ul class="list-group">
