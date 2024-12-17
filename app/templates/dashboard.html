@@ -47,18 +47,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Lista de Ativos Online -->
-    <div class="mt-4">
-        <h2>Ativos Online</h2>
-        <ul class="list-group">
-            {% for asset in assets %}
-                {% if asset.status == 'online' %}
-                    <li class="list-group-item">{{ asset.branch_number }} (IP: {{ asset.ip_address }}) - Uptime: {{ asset.last_online }}</li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-    </div>
 </div>
 
 {% endblock %}
