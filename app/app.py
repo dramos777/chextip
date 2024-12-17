@@ -3,11 +3,16 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 from flask import Flask, render_template, redirect, url_for, flash, request
 from logging.handlers import RotatingFileHandler
 from models import db, User, Condominium, Branch
+from flask_redis import FlaskRedis
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import subprocess
 import logging
+from utils import update_asset_status, get_asset_uptime, is_host_online, get_system_uptime, toggle_asset_visibility
 import os
+from dash_app import monitoring
+from apscheduler.schedulers.background import BackgroundScheduler
+import atexit
 
 app = Flask(__name__, static_folder='static')
 app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{os.getenv('MYSQL_USER', 'admin')}:{os.getenv('MYSQL_PASSWORD', 'admin')}@{os.getenv('MYSQL_HOST', '127.0.0.1')}/{os.getenv('MYSQL_DATABASE', 'condominios_db')}"
@@ -16,11 +21,17 @@ app.config['SECRET_KEY'] = 'secreta-chave-chextip'
 app.config['LOG_ACCESS_PATH'] = '/var/log/chextip/web_chextip_access.log'
 app.config['LOG_AUDIT_PATH'] = '/var/log/chextip/web_chextip_audit.log'
 
+# Configuração do Redis
+app.config['REDIS_URL'] = f"redis://{os.getenv('REDIS_HOST', '127.0.0.1')}:{os.getenv('REDIS_PORT', '6379')}/0"  # Endereço do servidor Redis
+
 # Initializing extensions
 db.init_app(app)
 migrate = Migrate(app, db)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
+
+# Inicializa o Redis
+redis = FlaskRedis(app)
 
 # Configure access and audit logs
 access_log_handler = RotatingFileHandler(app.config['LOG_ACCESS_PATH'], maxBytes=10000, backupCount=1)
@@ -31,6 +42,14 @@ audit_log_handler.setLevel(logging.INFO)
 
 app.logger.addHandler(access_log_handler)
 app.logger.addHandler(audit_log_handler)
+
+with app.app_context():
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(update_asset_status, 'interval', minutes=1, args=[app])
+    scheduler.start()
+
+# Garante que o scheduler pare ao encerrar a aplicação
+atexit.register(lambda: scheduler.shutdown())
 
 # Function to create tables automatically if they do not exist
 @app.before_first_request
@@ -124,6 +143,7 @@ def register_branch():
             branch_number=form.branch_number.data,
             model=form.model.data,
             manufacturer=form.manufacturer.data,
+            ip_address=form.ip_address.data,
             condominium_id=form.condominium_name.data
         )
         db.session.add(branch)
@@ -214,6 +234,7 @@ def edit_branch(branch_id):
         branch.branch_number = form.branch_number.data
         branch.model = form.model.data
         branch.manufacturer = form.manufacturer.data
+        branch.ip_address = form.ip_address.data
         branch.condominium_id = form.condominium_name.data
         db.session.commit()
         logging.info(f'Branch {branch.branch_number} edited by {current_user.username}')
@@ -331,6 +352,19 @@ def users():
 
     all_users = User.query.order_by(User.username.asc()).all()
     return render_template('users.html', users=all_users)
+
+# Alternar visibilidade
+@app.route('/toggle-visibility/<int:asset_id>', methods=['POST'])
+def toggle_visibility(asset_id):
+    toggle_asset_visibility(asset_id)
+    return '', 204  # Retorna sem conteúdo
+
+monitoring(app)
+
+@app.route('/monitoring')
+@login_required
+def dash_monitor():
+    return redirect('/monitoring/')
 
 # Start the Flask application
 if __name__ == '__main__':

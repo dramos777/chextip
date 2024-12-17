@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from flask_bcrypt import Bcrypt
+from datetime import datetime
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -35,14 +36,35 @@ class Condominium(db.Model):
 class Branch(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     location = db.Column(db.String(100), nullable=False)
+    ip_address = db.Column(db.String(50), nullable=True)
+    status = db.Column(db.String(20), nullable=False, default='offline')
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    last_online = db.Column(db.DateTime, nullable=True)
+    visible = db.Column(db.Boolean, default=True)
     branch_number = db.Column(db.String(20), nullable=False)
     model = db.Column(db.String(50), nullable=False)
     manufacturer = db.Column(db.String(50), nullable=False)
     condominium_id = db.Column(db.Integer, db.ForeignKey('condominium.id'), nullable=False)
+
 
     def __repr__(self):
         return f'<Branch {self.branch_number} - {self.location}>'
 
     def __str__(self):
         return f'Branch {self.branch_number} in {self.location}'
+
+    def get_uptime(self):
+        """Calcula o uptime com base no campo last_online."""
+        if not self.last_online:
+            return "Nunca esteve online"
+    
+        # Calcula a diferença entre o horário atual e o last_online
+        uptime_duration = datetime.utcnow() - self.last_online
+        print(f"Uptime Duration: {uptime_duration}")  # Verifica a diferença de tempo
+
+        hours = uptime_duration.seconds // 3600
+        minutes = (uptime_duration.seconds % 3600) // 60
+        seconds = uptime_duration.seconds % 60
+
+        return f"{hours:02}:{minutes:02}:{seconds:02}"
 

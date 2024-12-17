@@ -2,6 +2,10 @@ FROM python:3.10.15-slim-bookworm
 
 COPY ./app /app
 
+ENV TZ=America/Fortaleza
+
+
+
 WORKDIR /app
 
 RUN apt update \
@@ -13,6 +17,8 @@ RUN apt update \
     && tar -xvzf geckodriver-v0.35.0-linux64.tar.gz \
     && mv geckodriver /usr/local/bin/ \
     && rm -rf geckodriver-v0.35.0-linux64.tar.gz \
+    && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+    && echo $TZ > /etc/timezone \
     && apt remove --purge build-essential python3-dev wget bzip2 pip -y \
     && apt autoremove -y \
     && apt clean \

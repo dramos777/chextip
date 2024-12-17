@@ -4,6 +4,9 @@
 #MYSQL_PASSWORD="admin"
 #MYSQL_DATABASE="condominios_db"
 
+#REDIS_HOST="127.0.0.1"
+#REDIS_PORT="6379"
+
 #SSH RB
 #SSH_USER="admin"
 #SSH_PORT="22"
