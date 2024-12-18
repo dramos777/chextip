@@ -1,6 +1,6 @@
 from forms import LoginForm, RegisterBranchForm, RegisterUserForm, RegisterCondominiumForm, EditBranchForm, EditUserForm
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from flask import Flask, render_template, redirect, url_for, flash, request
+from flask import Flask, render_template, redirect, url_for, flash, request, jsonify
 from logging.handlers import RotatingFileHandler
 from models import db, User, Condominium, Branch
 from flask_redis import FlaskRedis
@@ -45,11 +45,11 @@ app.logger.addHandler(audit_log_handler)
 
 with app.app_context():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(update_asset_status, 'interval', minutes=1, args=[app])
+    scheduler.add_job(update_asset_status, 'interval', minutes=2, args=[app])
     scheduler.start()
 
 # Garante que o scheduler pare ao encerrar a aplicação
-atexit.register(lambda: scheduler.shutdown())
+    atexit.register(lambda: scheduler.shutdown())
 
 # Function to create tables automatically if they do not exist
 @app.before_first_request
@@ -104,7 +104,13 @@ def dashboard():
     else:
         condominiums = Condominium.query.all()
 
-    return render_template('dashboard.html', condominiums=condominiums)
+#    branches = Branch.query.all()
+    branches = Branch.query.join(Condominium).add_columns(
+        Branch.location, Branch.branch_number, Branch.ip_address, Branch.status,
+        Branch.visible, Branch.id, Condominium.name.label("condominium_name")
+    )
+
+    return render_template('dashboard.html', condominiums=condominiums, branches=branches)
 
 @app.route('/logout', methods=['POST'])
 @login_required
@@ -365,6 +371,23 @@ monitoring(app)
 @login_required
 def dash_monitor():
     return redirect('/monitoring/')
+
+@app.route('/api/offline_assets', methods=['GET'])
+@login_required
+def get_offline_assets():
+    branches = Branch.query.join(Condominium).add_columns(
+        Branch.location, Branch.branch_number, Branch.ip_address, Branch.status,
+        Branch.visible, Branch.id, Condominium.name.label("condominium_name")
+    )
+    offline_assets = [
+        {
+            'condominium_name': branch.condominium_name,
+            'branch_number': branch.branch_number,
+            'location': branch.location
+        }
+        for branch in branches if branch.status == 'offline'
+    ]
+    return jsonify(offline_assets)
 
 # Start the Flask application
 if __name__ == '__main__':

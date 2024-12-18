@@ -46,7 +46,7 @@ def monitoring(app):
         # Intervalo de atualização automática
         dcc.Interval(
             id="interval-component",
-            interval=10 * 1000,  # Atualiza a cada 120 segundos (em milissegundos)
+            interval=60 * 1000,  # Atualiza a cada 60 segundos (em milissegundos)
             n_intervals=0
         ),
     ])

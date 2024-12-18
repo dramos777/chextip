@@ -46,7 +46,6 @@ class Branch(db.Model):
     manufacturer = db.Column(db.String(50), nullable=False)
     condominium_id = db.Column(db.Integer, db.ForeignKey('condominium.id'), nullable=False)
 
-
     def __repr__(self):
         return f'<Branch {self.branch_number} - {self.location}>'
 
@@ -56,7 +55,7 @@ class Branch(db.Model):
     def get_uptime(self):
         """Calcula o uptime com base no campo last_online."""
         if not self.last_online:
-            return "Nunca esteve online"
+            return "Ativo offline"
     
         # Calcula a diferença entre o horário atual e o last_online
         uptime_duration = datetime.utcnow() - self.last_online

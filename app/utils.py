@@ -29,7 +29,7 @@ def get_asset_uptime(branch_number):
     asset = Branch.query.filter_by(branch_number=branch_number).first()
     if asset:
         uptime = asset.get_uptime()
-        redis_client.setex(f"asset_uptime:{branch_number}", 30, uptime)  # Armazena no Redis por 1 hora
+        redis_client.setex(f"asset_uptime:{branch_number}", 120, uptime)  # Armazena no Redis por 1 hora
         return uptime
 
     return "Ativo não encontrado"
@@ -67,13 +67,14 @@ def update_asset_status(app):
                                 asset.last_online = datetime.utcnow()
 
                                 # Armazena status e uptime no Redis
-                                redis_client.setex(f"asset_status:{branch_key}", 3600, "online")
+                                redis_client.setex(f"asset_status:{branch_key}", 120, "online")
                                 uptime = asset.get_uptime()
-                                redis_client.setex(f"asset_uptime:{branch_key}", 3600, uptime)
+                                redis_client.setex(f"asset_uptime:{branch_key}", 120, uptime)
                         else:
                             if asset.status == "online":
                                 asset.status = "offline"
-                                redis_client.setex(f"asset_status:{branch_key}", 3600, "offline")
+                                asset.last_online = None
+                                redis_client.setex(f"asset_status:{branch_key}", 120, "offline")
 
                 db.session.commit()
 
@@ -96,7 +97,7 @@ def toggle_asset_visibility(branch_number):
         asset.visible = not asset.visible
         db.session.commit()
         # Atualiza a visibilidade no Redis
-        redis_client.setex(f"asset_visibility:{branch_number}", 3600, asset.visible)
+        redis_client.setex(f"asset_visibility:{branch_number}", 120, asset.visible)
 
 # Função para obter o uptime do sistema
 def get_system_uptime():

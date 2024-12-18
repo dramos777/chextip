@@ -78,3 +78,7 @@ ClearTMP () {
 	Remove_tmp_files &
     fi
 }
+
+UpdateSqlIP () {
+    mysql -h "$MYSQL_HOST" -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -se "UPDATE branch SET ip_address="$CURRENTDEVICEIP" WHERE branch_number = "\'$BRANCH_NUMBER\'";"
+}
