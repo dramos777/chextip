@@ -22,7 +22,6 @@ services:
   chextip:
     image: dramos777/chextip:2.5
     environment:
-      #TO-ADD-VAR
       SIPURL: "${SIPURL:?Please configure SIPURL in the .env file}"
       PBXUSER: "${PBXUSER:?Please configure PBXUSER in the .env file}"
       PBXPASSWORD: "${PBXPASSWORD:?Please configure PBXPASSWORD in the .env file}"
@@ -30,6 +29,8 @@ services:
       MYSQL_USER: "${MYSQL_USER:?Please configure MYSQL_USER in the .env file}"
       MYSQL_PASSWORD: "${MYSQL_PASSWORD:?Please configure MYSQL_PASSWORD in the .env file}"
       MYSQL_HOST: "${MYSQL_HOST:?Please configure MYSQL_HOST in the .env file}"
+      REDIS_HOST: "${REDIS_HOST:?Please configure REDIS_HOST in the .env file}"
+      REDIS_PORT: "${REDIS_PORT:?Please configure REDIS_PORT in the .env file}"
       SSH_USER: "${SSH_USER:?Please configure SSH_USER in the .env file}"
       SSH_PORT: "${SSH_PORT:?Please configure SSH_PORT in the .env file}"
       SSH_PASSWORD: "${SSH_PASSWORD:?Please configure SSH_PASSWORD in the .env file}"
@@ -47,8 +48,8 @@ services:
       NICE_USER: "${NICE_USER:?Please configure NICE_USER in the .env file}"
       NICE_PASSWORD: "${NICE_PASSWORD:?Please configure NICE_PASSWORD in the .env file}"
       PREFIXIP: "${PREFIXIP:?Please configure PREFIXIP in the .env file}"
-    ports:
-      - "5000:5000"
+#    ports:
+#      - "5000:5000"
     volumes:
       - chextip_static:/app/static
       - /etc/localtime:/etc/localtime:ro
@@ -72,6 +73,17 @@ services:
       - db_data:/var/lib/mysql
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
+    networks:
+      - chextip-network
+    restart: "always"
+
+  redis:
+    image: redis:latest
+    environment:
+      REDIS_HOST: "${REDIS_HOST:?Please configure REDIS_HOST in the .env file}"
+      REDIS_PORT: "${REDIS_PORT:?Please configure REDIS_PORT in the .env file}"
+#    ports:
+#      - "6379:6379"
     networks:
       - chextip-network
     restart: "always"

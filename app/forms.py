@@ -1,5 +1,5 @@
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
-from wtforms.validators import DataRequired, Length, EqualTo
+from wtforms.validators import DataRequired, Length, EqualTo, IPAddress, Optional
 from flask_wtf import FlaskForm
 
 class LoginForm(FlaskForm):
@@ -18,8 +18,8 @@ class RegisterBranchForm(FlaskForm):
     branch_number = StringField('Identificador / Número', validators=[DataRequired()])
     model = StringField('Modelo', validators=[DataRequired()])
     manufacturer = StringField('Fabricante', validators=[DataRequired()])
+    ip_address = StringField('Endereço IP', validators=[Optional(), IPAddress(ipv4=True)])
     condominium_name = SelectField('Condomínio', choices=[], coerce=int, validators=[DataRequired()])
-    #condominium_id = StringField('ID do Condomínio', validators=[DataRequired()])
     submit = SubmitField('Cadastrar Dispositivo')
 
 class EditBranchForm(FlaskForm):
@@ -27,6 +27,7 @@ class EditBranchForm(FlaskForm):
     branch_number = StringField('Identificador / Número', validators=[DataRequired()])
     model = StringField('Modelo', validators=[DataRequired()])
     manufacturer = StringField('Fabricante', validators=[DataRequired()])
+    ip_address = StringField('Endereço IP', validators=[Optional(), IPAddress(ipv4=True)])
     condominium_name = SelectField('Condomínio', choices=[], coerce=int, validators=[DataRequired()])
     submit = SubmitField('Salvar Alterações')
 
@@ -38,6 +39,6 @@ class EditUserForm(FlaskForm):
 
 class RegisterCondominiumForm(FlaskForm):
     name = StringField('Nome do Condomínio', validators=[DataRequired()])
-    rb_host_ip = StringField('RB HOST IP', validators=[DataRequired()])
+    rb_host_ip = StringField('RB HOST IP', validators=[DataRequired(), IPAddress()])
     submit = SubmitField('Cadastrar Condomínio')
 
