@@ -79,6 +79,16 @@ ClearTMP () {
     fi
 }
 
+CurrentDeviceIP () {
+    #Command to discovery current ATA IP
+    SSH_COMMAND="/ip dhcp-server lease print where comment~\"$BRANCH_NUMBER\""
+
+    #Get current ATA IP 
+    CURRENTDEVICEIP="$(CommandSSH | GrepIP)"
+    ErrorSSH
+}
+
 UpdateSqlIP () {
-    mysql -h "$MYSQL_HOST" -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -se "UPDATE branch SET ip_address="$CURRENTDEVICEIP" WHERE branch_number = "\'$BRANCH_NUMBER\'";"
+    CurrentDeviceIP
+    mysql -h "$MYSQL_HOST" -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -se "UPDATE branch SET ip_address="\'$CURRENTDEVICEIP\'" WHERE branch_number="\'$BRANCH_NUMBER\'";"
 }
