@@ -168,10 +168,11 @@ fi
 
 ClearTMP
 
+UpdateSqlIP
+
 TIME="$(date "+%H:%M:%S")"
 
 echo "Reinicialização do ramal/dispositivo $1 finalizada. ($DATE $TIME)"
 echo "================================================================================"
 echo "Por favor, aguarde 2min e realize um novo teste no ramal/dispositivo $1"
 echo "================================================================================"
-

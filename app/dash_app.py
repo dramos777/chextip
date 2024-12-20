@@ -100,6 +100,10 @@ def monitoring(app):
             "Branch_Number": a.branch_number,
             "ID": a.id,
         } for a in assets])
+        
+        # Check if the DataFrame is valid
+        if data.empty or 'Status' not in data.columns:
+            return dash.no_update  # Prevent the update if data is invalid
 
         pie_fig = px.pie(
             data, names='Status', title="Distribuição dos Ativos por Status",
