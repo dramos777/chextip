@@ -193,15 +193,18 @@ def intelbras_ss3530():
 def intelbras_ss3532():
     firefox = None
     try:
-        option = Options()
-        option.add_argument('--headless')
-        firefox = webdriver.Firefox(options=option)
+        # Configuração do navegador
+        options = Options()
+        # options.add_argument('--headless')  # Use modo headless se necessário
+        firefox = webdriver.Firefox(options=options)
         firefox.get("http://CURRENTDEVICEIP")
 
-        WebDriverWait(firefox, 25).until(
+        print("Aguardando campo de usuário...")
+        WebDriverWait(firefox, 10).until(
             EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[1]/div[3]/form/div[1]/div/div/input'))
         )
 
+        # Inserir credenciais
         username = firefox.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[1]/div[3]/form/div[1]/div/div/input')
         username.send_keys("HTTP_USER")
 
@@ -209,32 +212,61 @@ def intelbras_ss3532():
         password.send_keys("HTTP_SS3532_PASS")
         password.send_keys(Keys.RETURN)
 
-        WebDriverWait(firefox, 25).until(
-            EC.visibility_of_element_located((By.XPATH, '/html/body/div/div[2]/div[2]/div[1]/div/div/ul/li[15]'))
+        print("Aguardando desaparecimento do carregador...")
+        WebDriverWait(firefox, 20).until(
+            EC.invisibility_of_element((By.CLASS_NAME, 'el-loading-spinner'))
         )
 
-        maintenance = firefox.find_element(By.XPATH, '/html/body/div/div[2]/div[2]/div[1]/div/div/ul/li[15]')
-        maintenance.click()
-
-        WebDriverWait(firefox, 25).until(
-            EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[2]/div[2]/div/div/div/div[2]/div/div[2]/button/span'))
+        print("Tentando clicar no menu...")
+        retry_click_element(
+            driver=firefox,
+            xpath='/html/body/div/div[2]/div[2]/div[1]/div/div/ul/li[15]',
+            max_retries=5,
+            wait_time=5
         )
 
+        print("Aguardando botão de reinício...")
+        WebDriverWait(firefox, 10).until(
+            EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div[2]/div[2]/div[2]/div/div/div/div[2]/div/div[2]/button/span'))
+        )
+        
+        # Clicar no botão de reinício
         reboot_button = firefox.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[2]/div[2]/div/div/div/div[2]/div/div[2]/button/span')
         reboot_button.click()
 
-        time.sleep(5)
+        print("Confirmando alerta de reinício...")
+        WebDriverWait(firefox, 5).until(EC.alert_is_present())
+        alert = firefox.switch_to.alert
+        alert.accept()
 
-        alert = firefox.switch_to.active_element
-        alert.send_keys(Keys.RETURN)
+        print("Dispositivo reiniciado com sucesso!")
 
     except Exception as e:
-        print(f"An exception occurred: {e}")
+        print(f"Um erro ocorreu: {e}")
         sys.exit(1)
 
     finally:
         if firefox:
             firefox.quit()
+
+
+def retry_click_element(driver, xpath, max_retries=5, wait_time=5):
+    """
+    Tenta clicar em um elemento até o número máximo de tentativas.
+    """
+    for attempt in range(max_retries):
+        try:
+            element = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, xpath))
+            )
+            element.click()
+            print(f"Elemento clicado com sucesso na tentativa {attempt + 1}!")
+            return
+        except Exception as e:
+            print(f"Erro ao clicar no elemento: {e}. Tentando novamente em {wait_time} segundos...")
+            time.sleep(wait_time)
+
+    raise Exception(f"Não foi possível clicar no elemento após {max_retries} tentativas.")
 
 #Intelbras SS3540 is a face device
 def intelbras_ss3540():
