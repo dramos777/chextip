@@ -8,7 +8,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.firefox.options import Options
 import time
+import os
 
+
+sys.stderr = open(os.devnull, 'w') # Suprime erros complementares
 
 def intelbras_gkm2210t():
     firefox = None
@@ -235,9 +238,10 @@ def intelbras_ss3532():
         reboot_button.click()
 
         print("Confirmando alerta de reinício...")
-        WebDriverWait(firefox, 5).until(EC.alert_is_present())
-        alert = firefox.switch_to.alert
-        alert.accept()
+        
+        time.sleep(5)
+        alert = firefox.switch_to.active_element
+        alert.send_keys(Keys.RETURN)
 
         print("Dispositivo reiniciado com sucesso!")
 
