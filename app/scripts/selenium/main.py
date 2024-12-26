@@ -25,7 +25,9 @@ def intelbras_gkm2210t():
         reboot_menu = firefox.find_element("id", "linkMenu7")
         reboot_menu.click()
 
-        time.sleep(5)
+        WebDriverWait(firefox, 10).until(
+            EC.visibility_of_element_located((By.XPATH, "//input[@value=' Reiniciar ' and @class='botaoGeral']"))
+        )
 
         reboot_button = firefox.find_element(By.XPATH, "//input[@value=' Reiniciar ' and @class='botaoGeral']")
         reboot_button.click()
@@ -119,6 +121,10 @@ def khomp():
         firefox.switch_to.default_content()
         firefox.switch_to.frame("menuFrame")
 
+        WebDriverWait(firefox, 10).until(
+            EC.visibility_of_element_located((By.XPATH, '//input[@value="REINICIAR" and @style="width:100%"]'))
+        )
+
         restart_button = firefox.find_element(By.XPATH, '//input[@value="REINICIAR" and @style="width:100%"]')
         time.sleep(5)
         restart_button.click()
@@ -156,10 +162,16 @@ def intelbras_ss3530():
         password.send_keys("HTTP_SS3530_PASS")
         password.send_keys(Keys.RETURN)
 
-        time.sleep(5)
+        WebDriverWait(firefox, 20).until(
+            EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[2]/div[1]/div/div/ul/li[11]'))
+        )
 
         maintenance = firefox.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[2]/div[1]/div/div/ul/li[11]')
         maintenance.click()
+
+        WebDriverWait(firefox, 20).until(
+            EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[2]/div[2]/div/div/div/div[2]/div/div[2]/button/span'))
+        )
 
         reboot_button = firefox.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[2]/div[2]/div/div/div/div[2]/div/div[2]/button/span')
         reboot_button.click()
@@ -186,7 +198,7 @@ def intelbras_ss3532():
         firefox = webdriver.Firefox(options=option)
         firefox.get("http://CURRENTDEVICEIP")
 
-        WebDriverWait(firefox, 10).until(
+        WebDriverWait(firefox, 19).until(
             EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[1]/div[3]/form/div[1]/div/div/input'))
         )
 
@@ -197,16 +209,16 @@ def intelbras_ss3532():
         password.send_keys("HTTP_SS3532_PASS")
         password.send_keys(Keys.RETURN)
 
-        time.sleep(7)
-
-        WebDriverWait(firefox, 15).until(
+        WebDriverWait(firefox, 19).until(
             EC.visibility_of_element_located((By.XPATH, '/html/body/div/div[2]/div[2]/div[1]/div/div/ul/li[15]'))
         )
 
-        time.sleep(7)
-
         maintenance = firefox.find_element(By.XPATH, '/html/body/div/div[2]/div[2]/div[1]/div/div/ul/li[15]')
         maintenance.click()
+
+        WebDriverWait(firefox, 19).until(
+            EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[2]/div[2]/div/div/div/div[2]/div/div[2]/button/span'))
+        )
 
         reboot_button = firefox.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[2]/div[2]/div/div/div/div[2]/div/div[2]/button/span')
         reboot_button.click()
@@ -233,7 +245,7 @@ def intelbras_ss3540():
         firefox = webdriver.Firefox(options=option)
         firefox.get("http://CURRENTDEVICEIP")
 
-        WebDriverWait(firefox, 10).until(
+        WebDriverWait(firefox, 19).until(
             EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[1]/div[3]/form/div[1]/div/div/input'))
         )
 
@@ -244,16 +256,16 @@ def intelbras_ss3540():
         password.send_keys("HTTP_SS3540_PASS")
         password.send_keys(Keys.RETURN)
 
-        time.sleep(7)
-
-        WebDriverWait(firefox, 15).until(
-            EC.visibility_of_element_located((By.XPATH, '/html/body/div/div[2]/div[2]/div[1]/div/div/ul/li[15]'))
+        WebDriverWait(firefox, 25).until(
+            EC.visibility_of_element_located((By.XPATH, '/html/body/div/div[2]/div[2]/div[1]/div/div/ul/li[13]'))
         )
-
-        time.sleep(7)
 
         maintenance = firefox.find_element(By.XPATH, '/html/body/div/div[2]/div[2]/div[1]/div/div/ul/li[13]')
         maintenance.click()
+
+        WebDriverWait(firefox, 25).until(
+            EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[2]/div[2]/div/div/div/div[2]/div/div[2]/button/span'))
+        )
 
         reboot_button = firefox.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[2]/div[2]/div/div/div/div[2]/div/div[2]/button/span')
         reboot_button.click()
@@ -280,7 +292,7 @@ def intelbras_ss1530():
         firefox = webdriver.Firefox(options=option)
         firefox.get("http://CURRENTDEVICEIP")
 
-        WebDriverWait(firefox, 10).until(
+        WebDriverWait(firefox, 20).until(
             EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[1]/div[3]/form/div[1]/div/div/input'))
         )
 
@@ -291,16 +303,16 @@ def intelbras_ss1530():
         password.send_keys("HTTP_SS1530_PASS")
         password.send_keys(Keys.RETURN)
 
-        time.sleep(7)
-
-        WebDriverWait(firefox, 15).until(
-            EC.visibility_of_element_located((By.XPATH, '/html/body/div/div[2]/div[2]/div[1]/div/div/ul/li[15]'))
+        WebDriverWait(firefox, 25).until(
+            EC.visibility_of_element_located((By.XPATH, '/html/body/div/div[2]/div[2]/div[1]/div/div/ul/li[12]'))
         )
-
-        time.sleep(7)
 
         maintenance = firefox.find_element(By.XPATH, '/html/body/div/div[2]/div[2]/div[1]/div/div/ul/li[12]')
         maintenance.click()
+
+        WebDriverWait(firefox, 25).until(
+            EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[2]/div[2]/div/div/div/div[2]/div/div[2]/button/span'))
+        )
 
         reboot_button = firefox.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[2]/div[2]/div/div/div/div[2]/div/div[2]/button/span')
         reboot_button.click()
@@ -338,7 +350,7 @@ def intelbras_xpe3200():
         password.send_keys("HTTP_XPE3200_PASS")
         password.send_keys(Keys.RETURN)
 
-        WebDriverWait(firefox, 10).until(
+        WebDriverWait(firefox, 20).until(
             EC.visibility_of_element_located((By.XPATH, '//*[@id="tMenu60"]'))
         )
 
@@ -347,6 +359,10 @@ def intelbras_xpe3200():
         time.sleep(5)
 
         update_button.click()
+
+        WebDriverWait(firefox, 20).until(
+            EC.visibility_of_element_located((By.XPATH, '//*[@id="Reboot"]'))
+        )
 
         reboot_button = firefox.find_element(By.XPATH, '//*[@id="Reboot"]')
         reboot_button.click()
@@ -381,14 +397,15 @@ def linear_module():
             )
         except Exception:
             firefox.refresh()
-            WebDriverWait(firefox, 10).until(
+
+            WebDriverWait(firefox, 20).until(
                 EC.visibility_of_element_located((By.XPATH, '/html/body/div/div/div/div/div/div[1]/a[2]'))
             )
 
         network_button = firefox.find_element(By.XPATH, '/html/body/div/div/div/div/div/div[1]/a[2]')
         network_button.click()
 
-        WebDriverWait(firefox, 10).until(
+        WebDriverWait(firefox, 20).until(
             EC.visibility_of_element_located((By.XPATH, '//*[@id="e_dns1"]'))
         )
 
@@ -427,12 +444,12 @@ def nice_module():
         firefox.get("http://NICE_USER:NICE_PASSWORD@CURRENTDEVICEIP")
 
         try:
-            WebDriverWait(firefox, 10).until(
+            WebDriverWait(firefox, 20).until(
                 EC.visibility_of_element_located((By.XPATH, '/html/body/div[2]/ul/li[2]/a'))
             )
         except Exception:
             firefox.refresh()
-            WebDriverWait(firefox, 10).until(
+            WebDriverWait(firefox, 20).until(
                 EC.visibility_of_element_located((By.XPATH, '/html/body/div[2]/ul/li[2]/a'))
             )
 
@@ -440,12 +457,12 @@ def nice_module():
         network_button.click()
 
         try:
-            WebDriverWait(firefox, 10).until(
+            WebDriverWait(firefox, 20).until(
                 EC.visibility_of_element_located((By.XPATH, '/html/body/div[3]/form/button'))
             )
         except Exception:
             firefox.refresh()
-            WebDriverWait(firefox, 10).until(
+            WebDriverWait(firefox, 20).until(
                 EC.visibility_of_element_located((By.XPATH, '/html/body/div[3]/form/button'))
             )
 
