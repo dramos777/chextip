@@ -198,7 +198,7 @@ def intelbras_ss3532():
         firefox = webdriver.Firefox(options=option)
         firefox.get("http://CURRENTDEVICEIP")
 
-        WebDriverWait(firefox, 19).until(
+        WebDriverWait(firefox, 25).until(
             EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[1]/div[3]/form/div[1]/div/div/input'))
         )
 
@@ -209,14 +209,14 @@ def intelbras_ss3532():
         password.send_keys("HTTP_SS3532_PASS")
         password.send_keys(Keys.RETURN)
 
-        WebDriverWait(firefox, 19).until(
+        WebDriverWait(firefox, 25).until(
             EC.visibility_of_element_located((By.XPATH, '/html/body/div/div[2]/div[2]/div[1]/div/div/ul/li[15]'))
         )
 
         maintenance = firefox.find_element(By.XPATH, '/html/body/div/div[2]/div[2]/div[1]/div/div/ul/li[15]')
         maintenance.click()
 
-        WebDriverWait(firefox, 19).until(
+        WebDriverWait(firefox, 25).until(
             EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[2]/div[2]/div/div/div/div[2]/div/div[2]/button/span'))
         )
 
@@ -245,7 +245,7 @@ def intelbras_ss3540():
         firefox = webdriver.Firefox(options=option)
         firefox.get("http://CURRENTDEVICEIP")
 
-        WebDriverWait(firefox, 19).until(
+        WebDriverWait(firefox, 25).until(
             EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[1]/div[3]/form/div[1]/div/div/input'))
         )
 
@@ -292,7 +292,7 @@ def intelbras_ss1530():
         firefox = webdriver.Firefox(options=option)
         firefox.get("http://CURRENTDEVICEIP")
 
-        WebDriverWait(firefox, 20).until(
+        WebDriverWait(firefox, 25).until(
             EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[1]/div[3]/form/div[1]/div/div/input'))
         )
 
