@@ -54,7 +54,7 @@ Intelbras_ss3532 () {
 	-e "s/HTTP_USER/$HTTP_USER/g" \
 	-e "s/HTTP_SS3532_PASS/$HTTP_SS3532_PASS/g" \
 	-e "s/PYTHON_COMMAND/intelbras_ss3532/g" > "$DIRTMP/${RANDOM_F}_main.py" \
-	&& python "$DIRTMP/${RANDOM_F}_main.py"
+	&& python "$DIRTMP/${RANDOM_F}_main.py" 2>&1 > /dev/null
     PBX_PID="$!"
 }
 

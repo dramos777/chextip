@@ -7,11 +7,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.firefox.options import Options
+from selenium.common.exceptions import WebDriverException
 import time
-import os
 
-
-sys.stderr = open(os.devnull, 'w') # Suprime erros complementares
 
 def intelbras_gkm2210t():
     firefox = None
@@ -198,7 +196,7 @@ def intelbras_ss3532():
     try:
         # Configuração do navegador
         options = Options()
-        # options.add_argument('--headless')  # Use modo headless se necessário
+        options.add_argument('--headless')  # Use modo headless se necessário
         firefox = webdriver.Firefox(options=options)
         firefox.get("http://CURRENTDEVICEIP")
 
@@ -266,11 +264,11 @@ def retry_click_element(driver, xpath, max_retries=5, wait_time=5):
             element.click()
             print(f"Elemento clicado com sucesso na tentativa {attempt + 1}!")
             return
-        except Exception as e:
+        except WebDriverException as e:
             print(f"Erro ao clicar no elemento: {e}. Tentando novamente em {wait_time} segundos...")
             time.sleep(wait_time)
 
-    raise Exception(f"Não foi possível clicar no elemento após {max_retries} tentativas.")
+    raise WebDriverException(f"Não foi possível clicar no elemento após {max_retries} tentativas.")
 
 #Intelbras SS3540 is a face device
 def intelbras_ss3540():
