@@ -20,7 +20,7 @@ services:
       - chextip-network
 
   chextip:
-    image: dramos777/chextip:2.5
+    image: dramos777/chextip:2.7
     environment:
       SIPURL: "${SIPURL:?Please configure SIPURL in the .env file}"
       PBXUSER: "${PBXUSER:?Please configure PBXUSER in the .env file}"
