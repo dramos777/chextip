@@ -128,3 +128,13 @@ NiceModule () {
 	&& python "$DIRTMP/${RANDOM_F}_main.py"
     PBX_PID="$!"
 }
+
+Controlid_idfacemax () {
+    cat "$SELENIUM/main.py" | \
+        sed -e "s/CURRENTDEVICEIP/$CURRENTDEVICEIP/g" \
+	-e "s/HTTP_USER/$HTTP_USER/g" \
+	-e "s/HTTP_CONTROLID_IDFACEMAX_PASS/$HTTP_CONTROLID_IDFACEMAX_PASS/g" \
+	-e "s/PYTHON_COMMAND/controlid_idfacemax/g" > "$DIRTMP/${RANDOM_F}_main.py" \
+	&& python "$DIRTMP/${RANDOM_F}_main.py"
+    PBX_PID="$!"
+}

@@ -516,5 +516,65 @@ def nice_module():
         if firefox:
             firefox.quit()
 
+def controlid_idfacemax():
+    firefox = None
+    try:
+        # Configuração do navegador
+        options = Options()
+        options.add_argument('--headless')  # Use modo headless se necessário
+        firefox = webdriver.Firefox(options=options)
+        firefox.get("http://CURRENTDEVICEIP")
+
+        print("Aguardando campo de usuário...")
+        WebDriverWait(firefox, 10).until(
+            EC.visibility_of_element_located((By.XPATH, '//*[@id="input_user"]'))
+        )
+
+        # Inserir credenciais
+        username = firefox.find_element(By.XPATH, '//*[@id="input_user"]')
+        username.send_keys("HTTP_USER")
+
+        password = firefox.find_element(By.XPATH, '//*[@id="input_password"]')
+        password.send_keys("HTTP_CONTROLID_IDFACEMAX_PASS")
+        password.send_keys(Keys.RETURN)
+
+        print("Aguardando menu aparecer...")
+        WebDriverWait(firefox, 20).until(
+            EC.invisibility_of_element_located((By.XPATH, '/html/body/div[2]/div[1]/div/ul/li[9]/a'))
+        )
+
+        firefox.get("http://CURRENTDEVICEIP/pt_BR/html/configurations.html")
+
+        print("Aguardando botão de reinício...")
+        WebDriverWait(firefox, 10).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, '#btnReboot > label:nth-child(2)'))
+        )
+
+        # Clicar no botão de reinício
+        reboot_button = firefox.find_element(By.CSS_SELECTOR, '#btnReboot > label:nth-child(2)')
+        firefox.execute_script("arguments[0].scrollIntoView(true);", reboot_button)
+        firefox.execute_script("arguments[0].click();", reboot_button)
+
+        print("Confirmando alerta de reinício...")
+        firefox.switch_to.active_element
+        alert = firefox.find_element(By.CSS_SELECTOR, 'button.blue:nth-child(2)')
+        firefox.execute_script("arguments[0].click();", alert)
+
+        firefox.switch_to.active_element
+        alert = firefox.find_element(By.CSS_SELECTOR, 'div.modal-scrollable:nth-child(24) > div:nth-child(1) > div:nth-child(3) > button:nth-child(2)')
+        firefox.execute_script("arguments[0].click();", alert)
+
+        time.sleep(3)
+
+        print("Dispositivo reiniciado com sucesso!")
+
+    except Exception as e:
+        print(f"Um erro ocorreu: {e}")
+        sys.exit(1)
+
+    finally:
+        if firefox:
+            firefox.quit()
+
 # Call your functions
 PYTHON_COMMAND()

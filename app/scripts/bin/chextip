@@ -143,6 +143,10 @@ if [ ! -z "$MODEL" ]; then
 	    && Intelbras_xpe3200 2>&1
 	    ;;
 
+	idfacemax) UpdatePubIp \
+	    && Controlid_idfacemax 2>&1
+	    ;;
+
 	linear)
 	    LinearModule 2>&1
 	    ;;
