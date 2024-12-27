@@ -525,7 +525,7 @@ def controlid_idfacemax():
         firefox = webdriver.Firefox(options=options)
         firefox.get("http://CURRENTDEVICEIP")
 
-        print("Aguardando campo de usuário...")
+       # print("Aguardando campo de usuário...")
         WebDriverWait(firefox, 10).until(
             EC.visibility_of_element_located((By.XPATH, '//*[@id="input_user"]'))
         )
@@ -538,14 +538,14 @@ def controlid_idfacemax():
         password.send_keys("HTTP_CONTROLID_IDFACEMAX_PASS")
         password.send_keys(Keys.RETURN)
 
-        print("Aguardando menu aparecer...")
+        #print("Aguardando menu aparecer...")
         WebDriverWait(firefox, 20).until(
             EC.invisibility_of_element_located((By.XPATH, '/html/body/div[2]/div[1]/div/ul/li[9]/a'))
         )
 
         firefox.get("http://CURRENTDEVICEIP/pt_BR/html/configurations.html")
 
-        print("Aguardando botão de reinício...")
+        #print("Aguardando botão de reinício...")
         WebDriverWait(firefox, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, '#btnReboot > label:nth-child(2)'))
         )
@@ -555,7 +555,7 @@ def controlid_idfacemax():
         firefox.execute_script("arguments[0].scrollIntoView(true);", reboot_button)
         firefox.execute_script("arguments[0].click();", reboot_button)
 
-        print("Confirmando alerta de reinício...")
+        #print("Confirmando alerta de reinício...")
         firefox.switch_to.active_element
         alert = firefox.find_element(By.CSS_SELECTOR, 'button.blue:nth-child(2)')
         firefox.execute_script("arguments[0].click();", alert)
@@ -566,7 +566,7 @@ def controlid_idfacemax():
 
         time.sleep(3)
 
-        print("Dispositivo reiniciado com sucesso!")
+        #print("Dispositivo reiniciado com sucesso!")
 
     except Exception as e:
         print(f"Um erro ocorreu: {e}")
